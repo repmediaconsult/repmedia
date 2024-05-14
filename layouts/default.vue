@@ -6,6 +6,7 @@
     <main>
       <slot />
     </main>
+    <AppTestimonials />
     <AppContact />
     <AppFooter />
   </div>
