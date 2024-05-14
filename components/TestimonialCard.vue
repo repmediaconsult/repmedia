@@ -5,7 +5,7 @@
         <img src="/images/testimonial.png" alt="testimonial" class="block mx-auto h-[60px] w-[60px] rounded-full shrink-0" />
         <div class="flex flex-col gap-[10px] items-center justify-center text-center">
             <h6 class="text-[#1B2435] font-bold text-[24px] group-hover:text-white transition-colors duration-200">Aaron Aslhey</h6>
-            <p class="text-xl font-medium text-[#5E84A1] group-hover:text-[#C6C6C6] group-hover:font-[450] transition-colors duration-200">
+            <p class="text-xl font-medium text-[#5E84A1] group-hover:text-[#C6C6C6] transition-colors duration-200">
                 UI Designer at Mamahe Studio
             </p>
         </div>

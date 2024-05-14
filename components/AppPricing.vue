@@ -1,8 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-    <AppAbout />
-    <AppConsultation />
+    <section class="my-[80px]"></section>
 </template>
 
 <style scoped></style>

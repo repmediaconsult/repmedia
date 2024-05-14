@@ -1,13 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-    <section class="py-[80px]">
+    <section class="py-[80px] my-[80px]">
         <div class="app-container flex flex-col gap-5">
             <p class="section-title">consultation</p>
             <div class="flex justify-between flex-wrap gap-8">
                 <div class="space-y-5 lg:max-w-[510px] xl:max-w-[695px]">
                     <h4 class="section-header">Wanna talk to the “bus”?</h4>
-                    <div class="space-y-5 text-[#5A5A5A] text-lg sm:text-xl xl:text-[24px] sm:leading-8 lg:leading-9 -tracking-[1px]">
+                    <div class="space-y-5 text-[#5A5A5A] paragraph">
                         <p>
                             But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a
                             complete account of the system
