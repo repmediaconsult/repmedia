@@ -6,6 +6,7 @@
     <main>
       <slot />
     </main>
+    <AppContact />
     <AppFooter />
   </div>
 </template>
