@@ -1,47 +1,55 @@
 @font-face {
-  font-display: swap;
-  font-family: "Circular Std";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/CircularStd-Medium.otf") format("opentype");
+    font-display: swap;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/CircularStd-Book.otf") format("opentype");
 }
 
 @font-face {
-  font-display: swap;
-  font-family: "Circular Std";
-  font-style: normal;
-  font-weight: 700;
-  src: url("../fonts/CircularStd-Bold.otf") format("opentype");
+    font-display: swap;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/CircularStd-Medium.otf") format("opentype");
 }
 
 @font-face {
-  font-display: swap;
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/dm-sans-v15-latin-regular.woff2") format("woff2");
+    font-display: swap;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/CircularStd-Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-display: swap;
-  font-family: "Plus Jakarta Sans";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/plus-jakarta-sans-v8-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/dm-sans-v15-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-display: swap;
-  font-family: "Plus Jakarta Sans";
-  font-style: normal;
-  font-weight: 500;
-  src: url("../fonts/plus-jakarta-sans-v8-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/plus-jakarta-sans-v8-latin-regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-display: swap;
-  font-family: "Plus Jakarta Sans";
-  font-style: normal;
-  font-weight: 600;
-  src: url("../fonts/plus-jakarta-sans-v8-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    font-display: swap;
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/plus-jakarta-sans-v8-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/plus-jakarta-sans-v8-latin-600.woff2") format("woff2");
 }

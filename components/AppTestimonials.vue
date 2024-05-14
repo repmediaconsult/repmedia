@@ -5,8 +5,8 @@
         <AppIcon name="testimonials-bg-left" class="absolute top-0 left-0 hidden md:block" />
         <AppIcon name="testimonials-bg-left" class="absolute bottom-[68px] right-0 hidden md:block" />
         <div class="app-container flex flex-col gap-6 md:gap-10 justify-center items-center text-center">
-            <p class="uppercase font-bold text-lg md:text-[24px] -tracking-[2%] text-[#3782CA]">testimonials</p>
-            <h5 class="text-[#1B2435] font-bold text-[32px] md:text-[38px] lg:text-[48px] leading-[40px] md:leading-[52px] lg:leading-[72px] -tracking-[4%]">
+            <p class="section-title">testimonials</p>
+            <h5 class="text-[#1B2435] section-header">
                 From Our Customers
             </h5>
             <p class="text-[#313131] max-w-[780px] mx-auto text-center text-lg md:text-[24px] leadin-6 md:leading-9">
