@@ -8,10 +8,16 @@ body {
   font-family: "DM Sans" !important;
 }
 
+.font-plus-jakarta {
+  font-family: "Plus Jakarta Sans" !important;
+}
+
 .app-container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1306px;
   padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (min-width: 768px) {

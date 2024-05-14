@@ -18,7 +18,7 @@ const footerLinks = [
   <footer class="bg-[#161A34] py-[80px]">
     <div class="app-container">
       <div class="max-w-[1196px] mx-auto flex flex-col gap-[30px]">
-        <div class="flex flex-wrap justify-between items-start gap-8">
+        <div class="flex flex-wrap justify-between items-start gap-14">
           <div class="flex flex-wrap items-start gap-x-[100px] gap-y-[30px]">
             <AppIcon name="repmedia" />
             <ul class="flex flex-wrap md:flex-col gap-[29px]">
@@ -27,8 +27,8 @@ const footerLinks = [
               </li>
             </ul>
           </div>
-          <div class="flex flex-col gap-[34px]">
-            <p class="text-white text-[24px] font-[450]">Our Social Media</p>
+          <div class="flex flex-col gap-5 md:gap-[34px]">
+            <p class="text-white text-xl md:text-[24px] font-[450]">Our Social Media</p>
             <ul class="flex flex-wrap gap-6">
               <li v-for="link in socialMediaLinks" :key="link.name">
                 <a
