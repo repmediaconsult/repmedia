@@ -11,19 +11,19 @@ export default defineNuxtConfig({
                 {
                     hid: "description",
                     name: "description",
-                    content: "Transforming Employment Support with Voice-Tech",
+                    content: "Making brands stand out",
                 },
                 {
                     hid: "og:description",
                     name: "og:description",
-                    content: "Transforming Employment Support with Voice-Tech",
+                    content: "Making brands stand out",
                 },
                 {
                     hid: "twitter:description",
                     name: "twitter:description",
-                    content: "Transforming Employment Support with Voice-Tech",
+                    content: "Making brands stand out",
                 },
-                { hid: "og:title", name: "og:title", content: "Repmedia" },
+                { hid: "og:title", name: "og:title", content: "Repmedia | Making brands stand out" },
                 { hid: "twitter:title", name: "twitter:title", content: "Repmedia" },
                 { hid: "og:site_name", name: "og:site_name", content: "Repmedia" },
                 {
