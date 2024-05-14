@@ -24,8 +24,8 @@ export default defineNuxtConfig({
                     content: "Making brands stand out",
                 },
                 { hid: "og:title", name: "og:title", content: "Repmedia | Making brands stand out" },
-                { hid: "twitter:title", name: "twitter:title", content: "Repmedia" },
-                { hid: "og:site_name", name: "og:site_name", content: "Repmedia" },
+                { hid: "twitter:title", name: "twitter:title", content: "Repmedia | Making brands stand out" },
+                { hid: "og:site_name", name: "og:site_name", content: "Repmedia | Making brands stand out" },
                 {
                     hid: "og:url",
                     name: "og:url",
