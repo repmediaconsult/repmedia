@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-    <section class="py-[90px] bg-white relative">
+    <section class="py-[56px] md:py-[90px] bg-white relative">
         <AppIcon name="testimonials-bg-left" class="absolute top-0 left-0 hidden md:block" />
         <AppIcon name="testimonials-bg-left" class="absolute bottom-[68px] right-0 hidden md:block" />
         <div class="app-container flex flex-col gap-6 md:gap-10 justify-center items-center text-center">
