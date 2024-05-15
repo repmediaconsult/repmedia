@@ -46,7 +46,7 @@ const pricing: Pricing[] = [
 </script>
 
 <template>
-    <section class="my-[80px]">
+    <section id="pricing" class="my-[80px]">
         <div class="app-container flex flex-col gap-10">
             <div class="flex flex-col gap-5 text-center justify-center items-center">
                 <p class="section-title">pricing</p>

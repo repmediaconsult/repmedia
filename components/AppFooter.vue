@@ -6,11 +6,11 @@ const socialMediaLinks = [
     { icon: "", name: "TikTok", url: "" },
 ];
 const footerLinks = [
-    { path: "", title: "Services" },
-    { path: "", title: "Pricing" },
-    { path: "", title: "Consultation" },
-    { path: "", title: "Contact Us" },
-    { path: "", title: "About us" },
+    { path: "/#services", title: "Services" },
+    { path: "/#pricing", title: "Pricing" },
+    { path: "/#consultation", title: "Consultation" },
+    { path: "#contact", title: "Contact Us" },
+    { path: "/#about", title: "About us" },
 ];
 </script>
 
@@ -23,7 +23,7 @@ const footerLinks = [
                         <AppIcon name="repmedia" />
                         <ul class="flex flex-wrap md:flex-col gap-[29px]">
                             <li v-for="link in footerLinks" :key="link.path" class="text-white">
-                                <NuxtLink to="#">{{ link.title }}</NuxtLink>
+                                <NuxtLink :to="link.path">{{ link.title }}</NuxtLink>
                             </li>
                         </ul>
                     </div>

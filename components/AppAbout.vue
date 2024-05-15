@@ -14,7 +14,7 @@ const about = [
 </script>
 
 <template>
-    <section class="py-[100px] bg-[#E7F1FC]">
+    <sectio id="about" class="py-[100px] bg-[#E7F1FC]">
         <div class="app-container flex flex-col gap-10 items-center justify-center text-center">
             <p class="section-title">this is us</p>
             <div class="max-w-[980px] mx-auto space-y-1">
@@ -36,7 +36,7 @@ const about = [
                 </li>
             </ul>
         </div>
-    </section>
+    </sectio>
 </template>
 
 <style scoped>

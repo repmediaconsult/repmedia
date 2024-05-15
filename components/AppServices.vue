@@ -34,7 +34,7 @@ const services = [
 </script>
 
 <template>
-    <section id="about" class="pb-[56px] md:pb-[80px]">
+    <section id="services" class="pb-[56px] md:pb-[80px]">
         <div class="app-container flex flex-col gap-5 items-center justify-center">
             <p class="section-title !normal-case">What we do</p>
             <div class="space-y-10 w-full">
