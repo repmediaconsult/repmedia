@@ -7,7 +7,7 @@ const navLinks = [
     { path: "/#about", name: "About Us" },
 ];
 
-const navIsOpen = ref(true);
+const navIsOpen = ref(false);
 
 const watchWindowResize = () => {
     const innerWidth = window.innerWidth;
@@ -19,27 +19,15 @@ onUnmounted(() => window.removeEventListener("resize", watchWindowResize));
 </script>
 
 <template>
-    <nav class="bg-white rounded-[24px] fixed top-12 py-5 z-20 w-full">
+    <nav class="bg-white rounded-[40px] fixed top-12 py-5 z-20 w-full">
         <div class="app-container flex justify-between items-center">
             <AppIcon name="header-logo" />
             <button class="flex lg:hidden flex-col gap-1 shrink-0" @click="navIsOpen = !navIsOpen">
                 <span v-for="number in 3" :key="number" class="block h-0.5 w-6 rounded-[100px] bg-black"></span>
             </button>
+            <NavigationLinks class="hidden lg:flex" />
             <transition name="appear" appear>
-                <ul
-                    v-if="navIsOpen"
-                    class="z-30 absolute lg:static top-[67px] left-0 bg-white w-full lg:w-auto max-w-full items-center justify-center flex-col lg:flex-row flex gap-10 py-10 lg:py-0">
-                    <li v-for="link in navLinks" :key="link.path">
-                        <NuxtLink
-                            :to="link.path"
-                            class="text-lg font-medium hover:text-[#3782CA] transition-colors duration-300 pb-1"
-                            :class="{
-                                'border-b-2 border-current': ($route.hash && link.path.includes($route.hash)) || (!$route.hash && link.path === '/'),
-                            }"
-                            >{{ link.name }}</NuxtLink
-                        >
-                    </li>
-                </ul>
+                <NavigationLinks v-if="navIsOpen" class="flex lg:hidden" />
             </transition>
         </div>
     </nav>
