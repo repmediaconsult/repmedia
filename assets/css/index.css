@@ -42,6 +42,10 @@ body {
     @apply text-lg sm:text-xl xl:text-[24px] sm:leading-8 lg:leading-9 -tracking-[0.288px];
 }
 
+.btn-outline {
+    @apply bg-white text-[#0F0F0F] hover:bg-black hover:text-white border border-black transition-colors duration-300;
+}
+
 @media screen and (min-width: 768px) {
     .app-container {
         padding: 0 32px;

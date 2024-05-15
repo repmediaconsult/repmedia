@@ -39,7 +39,7 @@ const contactOptions = [
                     <AppInput id="name" name="name" label="Name" placeholder="Your Name" required />
                     <AppInput id="email" name="email" label="Email" placeholder="Email Address" required />
                     <AppTextarea id="description" name="description" label="Description" placeholder="Example..." />
-                    <button class="rounded-[24px] bg-[#000000] text-white py-[10px] px-6 w-fit text-xl tracking-[-4%] font-[450]">Send a message</button>
+                    <button class="rounded-[24px] bg-[#000000] text-white py-[10px] px-6 w-fit text-xl tracking-[-4%]">Send a message</button>
                 </div>
             </div>
         </div>
