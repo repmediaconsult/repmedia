@@ -25,7 +25,7 @@ const contactOptions = [
 </script>
 
 <template>
-    <section class="py-[100px] bg-[#E7F1FC]">
+    <section id="contact" class="py-[100px] bg-[#E7F1FC]">
         <div class="app-container flex flex-col gap-5">
             <p class="section-title">contact us</p>
             <div class="flex flex-wrap gap-10">

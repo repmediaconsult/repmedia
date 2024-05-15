@@ -58,4 +58,9 @@ export default defineNuxtConfig({
     css: ["@/assets/css/index.css", "@/assets/css/font.css"],
     devtools: { enabled: true },
     modules: ["@nuxt/ui"],
+    router: {
+        options: {
+            scrollBehaviorType: "smooth",
+        },
+    },
 });
