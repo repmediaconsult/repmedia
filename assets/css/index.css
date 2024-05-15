@@ -14,12 +14,16 @@ body {
         sans-serif;
 }
 
+.font-circular {
+    font-family: "Circular Std" !important;
+}
+
 .font-dm-sans {
-    font-family: "DM Sans" !important;
+    font-family: "DM Sans";
 }
 
 .font-plus-jakarta {
-    font-family: "Plus Jakarta Sans" !important;
+    font-family: "Plus Jakarta Sans";
 }
 
 .app-container {

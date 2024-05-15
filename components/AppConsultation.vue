@@ -18,7 +18,9 @@
                         </p>
                         <p>Gibberish fr</p>
                     </div>
-                    <button class="bg-[#000] text-white py-[10px] px-6 rounded-[24px] text-xl -tracking-[4%]">Book Consultation</button>
+                    <NuxtLink to="/consultation" class="block w-fit bg-[#000] text-white py-[10px] px-6 rounded-[24px] text-xl -tracking-[4%]"
+                        >Book Consultation</NuxtLink
+                    >
                 </div>
                 <img src="/images/consultation.png" alt="consultation" class="h-auto max-w-full w-auto block mx-auto" />
             </div>

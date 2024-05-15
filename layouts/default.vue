@@ -7,7 +7,7 @@
             <slot />
         </main>
         <AppTestimonials />
-        <AppPricing />
+        <AppPricing v-if="$route.name !== 'consultation'" />
         <AppContact />
         <AppFooter />
     </div>
