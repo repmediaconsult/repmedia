@@ -88,6 +88,7 @@ const beginConsultation = () => {
                     :options
                     label="Do you have your updated resume with your recent workplace for upload?"
                     placeholder="Select" />
+                <FileUploader />
                 <AppInput
                     v-model="form.email"
                     label="Email Address"
