@@ -14,7 +14,7 @@
                     Ready to boost your brand? We'll craft a cool story, a memorable look, and use digital tricks to keep it in the spotlight. Let's make your
                     brand stand out!
                 </p>
-                <button class="w-fit btn-outline py-[10px] px-6 flex items-center gap-1 rounded-[24px] text-base md:text-lg -tracking-[4%]">
+                <button class="btn btn-outline py-[10px] px-6 text-base md:text-lg -tracking-[4%]">
                     Get Started
                     <AppIcon name="arrow-right-line" />
                 </button>

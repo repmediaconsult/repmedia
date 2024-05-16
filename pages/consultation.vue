@@ -30,7 +30,9 @@ const form = reactive({
     services: [],
 });
 const v$ = useVuelidate(rules, form, { $autoDirty: true });
-const formIsInvalid = ref(true);
+
+const formRef = ref<HTMLDivElement | null>(null);
+const formIsInvalid = ref(false);
 
 const beginConsultation = () => {
     v$.value.$touch();
@@ -44,7 +46,30 @@ const beginConsultation = () => {
 <template>
     <section class="pt-[161px] pb-[80px]">
         <div class="app-container flex flex-col gap-[80px]">
-            <div class="flex flex-col items-center justify-center text-center">
+            <div class="flex flex-col gap-10 justify-center items-center max-w-[919px] mx-auto">
+                <div class="text-center space-y-5">
+                    <h1 class="section-header font-bold">Make your career goals come true</h1>
+                    <p class="paragraph max-w-[684px] mx-auto text-[#505050]">
+                        When you need to improve your resume and meet your career targets, come to us, relax and be taken care of
+                    </p>
+                </div>
+                <button class="btn btn-outline py-[10px] px-[24px]" @click="formRef?.scrollIntoView({ behavior: 'smooth' })">
+                    Get Started
+                    <AppIcon name="arrow-right-line" />
+                </button>
+                <div class="relative">
+                    <div
+                        class="absolute left-4 md:left-6 lg:-left-[53.25px] top-4 md:top-8 bg-white projects px-4 md:px-5 py-2 md:py-[15px] rounded-[16px] flex flex-col items-center justify-center">
+                        <span class="flex items-center gap-0.5 font-medium text-[10px] md:text-xs uppercase">
+                            <AppIcon name="star" />
+                            <span class="opacity-50">Great Project</span>
+                        </span>
+                        <span class="font-bold text-[#1D1D1D] text-lg md:text-xl lg:text-2xl">800+ CVs</span>
+                    </div>
+                    <img src="/images/consultation-page.png" alt="consulation" class="block mx-auto h-auto max-w-full max-h-full" />
+                </div>
+            </div>
+            <div ref="formRef" class="flex flex-col items-center justify-center text-center">
                 <h1 class="section-header">Let’s get to know you</h1>
                 <p class="paragraph">Please fill the form below to help us give you the best Linkedin profile</p>
             </div>
@@ -101,4 +126,8 @@ const beginConsultation = () => {
     </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.projects {
+    box-shadow: 0px 8px 24px 0px #00000026;
+}
+</style>

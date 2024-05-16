@@ -46,6 +46,10 @@ body {
     @apply text-lg sm:text-xl xl:text-[24px] sm:leading-8 lg:leading-9 -tracking-[0.288px];
 }
 
+.btn {
+    @apply w-fit flex items-center gap-1 rounded-[24px];
+}
+
 .btn-outline {
     @apply bg-white text-[#0F0F0F] hover:bg-black hover:text-white border border-black transition-colors duration-300;
 }

@@ -19,9 +19,7 @@ defineProps<Props>();
         <div class="flex flex-col gap-[15px]">
             <h6 class="text-[#010101] text-[24px] leading-9 font-medium">{{ service.title }}</h6>
             <p class="text-[#010101] opacity-60 text-base">{{ service.content }}</p>
-            <button
-                class="flex items-center gap-1 bg-white text-[#0F0F0F] border border-[#000] rounded-[24px] py-[10px] px-[24px] w-fit group-hover:bg-black group-hover:text-white transition-colors duration-500 ease-in-out"
-                @click="navigateTo('/consultation')">
+            <button class="btn btn-outline py-[10px] px-[24px] group-hover:bg-black group-hover:text-white" @click="navigateTo('/consultation')">
                 Get Started
                 <AppIcon name="arrow-right-line" />
             </button>

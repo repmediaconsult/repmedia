@@ -19,7 +19,7 @@ onUnmounted(() => window.removeEventListener("resize", watchWindowResize));
 </script>
 
 <template>
-    <nav class="bg-white rounded-[40px] fixed top-12 py-5 z-20 w-full">
+    <nav class="bg-white rounded-[40px] fixed top-0 lg:top-12 py-10 lg:py-5 z-20 w-full">
         <div class="app-container flex justify-between items-center">
             <AppIcon name="header-logo" />
             <button class="flex lg:hidden flex-col gap-1 shrink-0" @click="navIsOpen = !navIsOpen">

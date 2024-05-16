@@ -20,9 +20,10 @@ const modelValue = defineModel<string>({ default: "" });
             v-model="modelValue"
             :name
             :id
-            class="w-full py-[10px] px-[14px] rounded-lg text-lg bg-white -tracking-[4%] border border-[#D9DDE3] text-[#B1B1B1] leading-[30px] appearance-none"
+            class="w-full py-[10px] px-[14px] rounded-lg text-lg bg-white -tracking-[4%] border border-[#D9DDE3] placeholder: leading-[30px] appearance-none"
+            :class="[modelValue ? 'text-black' : 'text-[#B1B1B1]']"
             :placeholder>
-            <option selected disabled>{{ placeholder }}</option>
+            <option value="" disabled selected>{{ placeholder }}</option>
             <option v-for="option in options" :key="option.value" :value="option.value">
                 {{ option.label }}
             </option>
