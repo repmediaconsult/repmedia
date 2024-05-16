@@ -16,7 +16,6 @@ const interval = ref<NodeJS.Timeout>();
 
 interval.value = setInterval(() => {
     uploadedChunk.value += Number(incrementSize);
-    console.log(uploadedChunk.value);
     if (uploadedChunk.value >= (fileSize as number)) {
         uploadedChunk.value = fileSize;
         clearInterval(interval.value);
@@ -40,7 +39,7 @@ interval.value = setInterval(() => {
                 <div class="space-y-4">
                     <p class="text-[#292D32] text-sm sm:text-base md:text-lg lg:text-xl truncate max-w-[200px] md:max-w-fit">{{ file?.name }}</p>
                     <div class="flex items-center gap-2 md:gap-[10px] text-xs sm:text-sm lg:text-lg">
-                        <span class="text-[#A9ACB4]"> {{ uploadedChunk.toFixed(2) }} KB of {{ fileSize.toFixed(2) }} KB • </span>
+                        <span class="text-[#A9ACB4]"> {{ Number(uploadedChunk).toFixed(2) }} KB of {{ Number(fileSize).toFixed(2) }} KB • </span>
                         <span class="capitalize flex items-center gap-1 sm:gap-[10px] loader">
                             <AppIcon :name="status" />
                             {{ status }}
