@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const active = ref(false);
-const file = ref<File>();
+const file = defineModel<File>("file");
 
 const toggleActive = () => {
     active.value = !active.value;

@@ -57,10 +57,22 @@ export default defineNuxtConfig({
     },
     css: ["@/assets/css/index.css", "@/assets/css/font.css"],
     devtools: { enabled: true },
-    modules: ["@nuxt/ui"],
+    imports: {
+        dirs: ["types"],
+    },
+    modules: ["@nuxt/ui", "@nuxtjs/supabase"],
     router: {
         options: {
             scrollBehaviorType: "smooth",
         },
+    },
+    runtimeConfig: {
+        public: {
+            paystackPublicKey: import.meta.env.PAYSTACK_PUBLIC_KEY,
+            paystackSecretKey: import.meta.env.PAYSTACK_SECRET_KEY,
+        },
+    },
+    supabase: {
+        redirect: false,
     },
 });

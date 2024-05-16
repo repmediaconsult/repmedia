@@ -16,7 +16,7 @@ const modelValue = defineModel<string | string[] | never[]>({ default: "" });
 
 <template>
     <label :for="id" class="cursor-pointer inline-flex items-center">
-        <input :id type="checkbox" v-model="modelValue" :checked="!!modelValue" v-bind="$attrs" hidden />
+        <input :id type="checkbox" v-model="modelValue" v-bind="$attrs" hidden />
         <div class="box bg-white flex content-center items-center"></div>
         <span class="text-lg text-[#313131]"> {{ label }} </span>
     </label>
