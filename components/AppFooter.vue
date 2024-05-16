@@ -1,9 +1,12 @@
 <script setup lang="ts">
 const socialMediaLinks = [
-    { icon: "", name: "Twitter", url: "" },
-    { icon: "", name: "Facebook", url: "" },
-    { icon: "", name: "Instagram", url: "" },
-    { icon: "", name: "TikTok", url: "" },
+    { icon: "facebook", name: "Facebook", url: "https://www.facebook.com/repmedia.ng/" },
+    { icon: "instagram", name: "Instagram", url: "https://www.instagram.com/repmedia1?igsh=MTZhc3lrMHc1MGU3Ng==" },
+    {
+        icon: "linkedin",
+        name: "LinkedIn",
+        url: "https://www.linkedin.com/company/28565083/admin/feed/posts/",
+    },
 ];
 const footerLinks = [
     { path: "/#services", title: "Services" },
@@ -36,8 +39,8 @@ const footerLinks = [
                                     :title="link.name"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="h-[52px] w-[52px] rounded-full border border-[#747E98] flex items-center justify-center">
-                                    <AppIcon name="social" />
+                                    class="flex items-center justify-center">
+                                    <AppIcon :name="link.icon" />
                                 </a>
                             </li>
                         </ul>

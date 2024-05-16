@@ -10,7 +10,7 @@ const navLinks = [
 
 <template>
     <ul
-        class="z-30 absolute lg:static top-[67px] left-0 bg-white w-full lg:w-auto max-w-full items-center justify-center flex-col lg:flex-row flex gap-10 py-10 lg:py-0">
+        class="z-30 absolute lg:static top-[77px] left-0 bg-white w-full lg:w-auto max-w-full items-center justify-center flex-col lg:flex-row flex gap-10 py-10 lg:py-0">
         <li v-for="link in navLinks" :key="link.path">
             <NuxtLink
                 :to="link.path"
