@@ -54,7 +54,7 @@ const sendMessage = async () => {
         Object.assign(form, { name: "", email: "", description: "" });
         v$.value.$reset();
     }
-    isLoading.value = true;
+    isLoading.value = false;
 };
 </script>
 
