@@ -6,6 +6,7 @@ interface InputProps {
     required?: boolean;
     inputClass?: string;
     labelClass?: string;
+    error?: string;
 }
 
 defineProps<InputProps>();
@@ -15,7 +16,12 @@ const modelValue = defineModel<string>({ default: "" });
 
 <template>
     <div class="flex flex-col gap-3 font-plus-jakarta">
-        <label :for="id" class="font-semibold text-base" :class="labelClass"> {{ label }}<span v-if="required" class="text-[#FF1616]">*</span> </label>
+        <div class="flex items-center justify-between">
+            <label :for="id" class="font-semibold text-base" :class="[labelClass, { '!text-[#eb5757]': !!error }]">
+                {{ label }}<span v-if="required" class="text-[#FF1616]">*</span>
+            </label>
+            <span v-if="!!error" class="text-xs md:text-sm text-[#eb5757] font-medium">{{ error }}</span>
+        </div>
         <input
             v-model="modelValue"
             type="text"
@@ -23,7 +29,7 @@ const modelValue = defineModel<string>({ default: "" });
             :id
             v-bind="$attrs"
             class="outline-none py-[17px] px-5 bg-[#F8F8F8] rounded-lg w-full placeholder:text-sm placeholder:font-normal"
-            :class="inputClass" />
+            :class="[inputClass, { 'border !border-[#eb5757]': !!error }]" />
     </div>
 </template>
 
