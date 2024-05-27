@@ -7,6 +7,10 @@ export default defineNuxtConfig({
             charset: "UTF-8",
             viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0",
             meta: [
+                {
+                    name: 'trustpilot-one-time-domain-verification-id',
+                    content: '88aefda3-04d0-442b-95ec-846a76c80c6d'
+                },
                 { hid: "theme-color", name: "theme-color", content: "#3782CA" },
                 {
                     hid: "description",
