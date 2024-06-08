@@ -1,8 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-    <HomeHero />
-    <LetterFromFounders />
+    <AppHero />
+    <AppServices />
+    <AppAbout />
+    <AppConsultation />
 </template>
 
 <style scoped></style>

@@ -24,7 +24,7 @@ const footerLinks = [
                 <div class="flex flex-wrap justify-between items-start gap-14">
                     <div class="flex flex-wrap items-start gap-x-[100px] gap-y-[30px]">
                         <AppIcon name="repmedia" />
-                        <ul class="flex flex-wrap md:flex-col gap-[29px]">
+                        <ul class="flex flex-wrap gap-[29px]">
                             <li v-for="link in footerLinks" :key="link.path" class="text-white">
                                 <NuxtLink :to="link.path">{{ link.title }}</NuxtLink>
                             </li>

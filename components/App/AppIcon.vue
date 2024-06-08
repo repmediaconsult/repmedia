@@ -12,13 +12,13 @@ const icon = ref("");
 
 const fetchIcon = async () => {
   try {
-    const iconsImport = import.meta.glob("../assets/icons/**/**.svg", {
+    const iconsImport = import.meta.glob("../../assets/icons/**/**.svg", {
       eager: false,
       query: "?raw",
       import: "default",
     });
 
-    const rawIcon = await iconsImport[`../assets/icons/${props.name}.svg`]();
+    const rawIcon = await iconsImport[`../../assets/icons/${props.name}.svg`]();
     if (rawIcon.includes("stroke")) hasStroke.value = true;
     icon.value = rawIcon;
   } catch (error) {
