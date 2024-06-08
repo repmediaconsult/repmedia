@@ -50,8 +50,11 @@ const pricing: Pricing[] = [
         <div class="app-container flex flex-col gap-10">
             <div class="flex flex-col gap-5 text-center justify-center items-center">
                 <p class="section-title">pricing</p>
-                <h5 class="section-header">Value for money, we care about your growth</h5>
-                <p class="paragraph">Why do we have different prices? What values?</p>
+                <h5 class="section-header">Get value for your money with any plan you choose </h5>
+                <p class="paragraph max-w-[803px] mx-auto">
+                    Select a suitable plan below. Our standard time of completion is 3 days. If you have a custom request or need any of our services under 24
+                    hours, click <button class="text-[#3782CA]">here</button>
+                </p>
             </div>
             <div class="space-y-5">
                 <div class="w-full max-w-[601px] mx-auto">

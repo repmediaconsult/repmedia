@@ -8,8 +8,6 @@ const isIndexPage = computed(() => useRoute().name === "index");
         <main>
             <slot />
         </main>
-        <AppTestimonials v-if="!isIndexPage" />
-        <AppPricing v-if="$route.name !== 'consultation' && !isIndexPage" />
         <AppContact v-if="!isIndexPage"  />
         <AppFooter />
     </div>

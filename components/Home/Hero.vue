@@ -93,14 +93,15 @@ section {
 }
 
 .typewriter h1 {
-    @apply w-fit max-w-fit overflow-hidden relative;
+    @apply w-fit max-w-fit overflow-hidden mr-1 relative;
     white-space: nowrap;
     animation: typing 3.5s steps(40, end);
 }
 
 .typewriter h1::after {
     content: "";
-    @apply absolute top-1 md:top-2 right-0 h-10 md:h-[76px] w-2 bg-[#3883cb];
+    overflow: visible;
+    @apply absolute top-1 md:top-2 -right-1 h-10 md:h-[76px] w-2 bg-[#3883cb];
     animation: blink-caret 0.75s step-end infinite;
 }
 
