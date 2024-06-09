@@ -24,14 +24,14 @@ const pricing: Pricing[] = [
     {
         icon: "heart",
         name: "starter",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        description: "A CV rewrite is the first and important step ",
         pricing: { "0_5": 50, "6_10": 70, "11_15": 120, "15+": 170 },
         checklist: generateChecklist(true, false, false),
     },
     {
         icon: "zap",
         name: "popular",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        description: "You can choose CV rewrite and any other option",
         pricing: { "0_5": 70, "6_10": 100, "11_15": 150, "15+": 200 },
         checklist: generateChecklist(true, true, false),
     },

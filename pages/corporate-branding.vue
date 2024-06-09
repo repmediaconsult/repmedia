@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div></div>
+    <CorporateCompanies />
+    <AppTestimonials />
+    <CorporateCTA />
 </template>
 
 <style scoped></style>

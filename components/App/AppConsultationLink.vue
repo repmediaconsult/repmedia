@@ -2,7 +2,7 @@
 
 <template>
     <a
-        href="#"
+        href="https://calendly.com/repmediaconsult-info"
         target="_blank"
         rel="noopener noreferrer"
         class="text-white bg-[#021943] py-[5px] px-5 rounded-[20px] inline-flex items-center gap-[10px] text-sm font-bold">

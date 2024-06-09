@@ -176,7 +176,7 @@ const beginConsultation = async () => {
                         <p>Please select an option here</p>
                     </div>
                     <button
-                        class="border border-black text-black bg-white hover:bg-black hover:text-white w-fit mx-auto px-6 py-[10px] rounded-[24px] transition-colors duration-300 flex items-center gap-1"
+                        class="btn btn-outline hover:!bg-[#3782CA] hover:border-[transparent] w-fit mx-auto px-6 py-[10px] rounded-[24px] transition-colors duration-300 flex items-center gap-1"
                         @click="beginConsultation">
                         Next
                         <AppIcon name="arrow-right-line" />

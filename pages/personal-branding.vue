@@ -1,15 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div>
-        <PersonalHero />
-        <div class="bg">
-            <AppServices />
-            <AppPricing />
-        </div>
-        <PersonalConsultation />
-        <AppTestimonials />
+    <PersonalHero />
+    <div class="bg">
+        <AppServices />
+        <AppPricing />
     </div>
+    <PersonalConsultation />
+    <AppTestimonials />
 </template>
 
 <style scoped>
