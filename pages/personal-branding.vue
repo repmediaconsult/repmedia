@@ -2,6 +2,7 @@
 
 <template>
     <div>
+        <PersonalHero />
         <div class="bg">
             <AppServices />
             <AppPricing />

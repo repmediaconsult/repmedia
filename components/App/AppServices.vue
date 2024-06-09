@@ -34,11 +34,21 @@ const services = [
 ];
 
 const howWeWork = [
-    { icon: "article", image: "", title: "Get Client Data", description: "You send in your current information via our data page / client form." },
-    { icon: "bank-card", image: "", title: "Make Payment", description: "Carefully selecting your category & service interest, make payment to us." },
-    { icon: "folder", image: "", title: "Finalisation", description: "Get your request in 3 - 4 working days and share feedback with the CV Advisor." },
+    { icon: "article", image: "data.webp", title: "Get Client Data", description: "You send in your current information via our data page / client form." },
+    {
+        icon: "bank-card",
+        image: "payment.webp",
+        title: "Make Payment",
+        description: "Carefully selecting your category & service interest, make payment to us.",
+    },
+    {
+        icon: "folder",
+        image: "finalization.webp",
+        title: "Finalisation",
+        description: "Get your request in 3 - 4 working days and share feedback with the CV Advisor.",
+    },
 ];
-const selected = ref(howWeWork[0].icon);
+const selected = ref(howWeWork[0]);
 </script>
 
 <template>
@@ -50,21 +60,24 @@ const selected = ref(howWeWork[0].icon);
                     <ServicesCard v-for="service in services" :key="service.image" :service />
                 </ul>
             </div>
-            <div class="max-w-[1017px] mx-auto bg-white border border-[#667085] rounded-[12px] p-10">
+            <div
+                class="flex flex-wrap items-center justify-between gap-5 max-w-[1017px] mx-auto bg-white border border-[#667085] rounded-[12px] py-10 p-5 md:p-8 lg:p-10">
                 <div class="space-y-6">
-                    <div class="flex items-center gap-5">
-                        <span class="block h-[1px] w-[52px] bg-black"></span>
-                        <h1 class="font-medium text-[#0C141D] text-[48px] leading-[72px]">How we work</h1>
+                    <div class="flex items-center gap-3 lg:gap-5">
+                        <span class="block h-[1px] w-8 lg:w-[52px] bg-black"></span>
+                        <h1 class="font-medium text-[#0C141D] text-2xl lg:text-[48px] lg:leading-[72px]">How we work</h1>
                     </div>
                     <ul class="space-y-6">
-                        <li v-for="item in howWeWork" :key="item.icon" class="flex gap-3 max-w-[406px] cursor-pointer" @click="selected = item.icon">
+                        <li v-for="item in howWeWork" :key="item.icon" class="flex gap-3 max-w-[406px] cursor-pointer" @click="selected = item">
                             <span
                                 class="h-6 w-6 flex items-center justify-center shrink-0 border rounded-full"
-                                :class="[item.icon === selected ? 'border-[#3782CA] text-[#3782CA]' : 'border-[#0C141D] text-black']">
+                                :class="[item.icon === selected.icon ? 'border-[#3782CA] text-[#3782CA]' : 'border-[#0C141D] text-black']">
                                 <AppIcon :name="item.icon" />
                             </span>
-                            <div class="space-y-2">
-                                <h6 class="text-2xl leading-9 font-medium" :class="[item.icon === selected ? 'text-[#3782CA]' : 'text-[#0C141D]']">
+                            <div class="space-y-1 md:space-y-2">
+                                <h6
+                                    class="text-lg lg:text-2xl lg:leading-9 font-medium"
+                                    :class="[item.icon === selected.icon ? 'text-[#3782CA]' : 'text-[#0C141D]']">
                                     {{ item.title }}
                                 </h6>
                                 <p class="text-base text-[#667085]">{{ item.description }}</p>
@@ -72,7 +85,9 @@ const selected = ref(howWeWork[0].icon);
                         </li>
                     </ul>
                 </div>
-                <div></div>
+                <div class="">
+                    <img :src="`/images/${selected.image}`" :alt="`${selected.title}`" class="block mx-auto max-h-full max-w-full" />
+                </div>
             </div>
         </div>
     </section>
