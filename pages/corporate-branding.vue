@@ -1,8 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-    <CorporateCompanies />
-    <AppTestimonials />
+    <div class="space-y-10">
+        <CorporateCompanies />
+        <CorporateProcesses />
+        <AppTestimonials />
+    </div>
     <CorporateCTA />
 </template>
 
