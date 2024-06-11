@@ -21,7 +21,7 @@ onUnmounted(() => window.removeEventListener("resize", watchWindowResize));
 </script>
 
 <template>
-    <nav class="bg-white py-10 sticky top-0 z-20 w-full">
+    <nav class="bg-white py-6 lg:py-10 sticky top-0 z-20 w-full">
         <div class="app-container flex justify-between items-center">
             <NuxtLink to="/">
                 <AppIcon name="header-logo" />
@@ -33,7 +33,7 @@ onUnmounted(() => window.removeEventListener("resize", watchWindowResize));
             <transition name="appear" appear>
                 <NavigationLinks v-if="navIsOpen && !isHomePage" class="flex lg:hidden" />
             </transition>
-            <AppConsultationLink class="hidden lg:flex" />
+            <AppConsultationLink :class="{ 'hidden lg:flex': $route.name !== 'index' }" />
         </div>
     </nav>
 </template>

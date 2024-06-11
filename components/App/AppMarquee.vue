@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-    <section class="marquee max-w-[1440px] mx-auto">
+    <section class="marquee mx-auto">
         <div class="wrapper">
             <span class="item w-full"><slot /></span>
             <span class="item w-full"><slot /></span>
@@ -11,7 +11,7 @@
 
 <style scoped>
 .marquee {
-    width: 1440px;
+    width: 1600px;
     overflow: hidden;
     position: relative;
     height: 92px;
