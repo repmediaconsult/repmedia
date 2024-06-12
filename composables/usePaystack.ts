@@ -28,17 +28,18 @@ export default function usePaystack() {
     };
 
     const payWithPaystack = (args: any) => {
+        const reference = generateReferance()
         const paymentOptions = {
             ...args,
             key: config.public.paystackPublicKey,
-            reference: generateReferance(),
+            reference,
             currency: "NGN",
             channels: ["card"],
             onSuccess: (response: any) => {
                 args.onSuccess(response) || (() => null);
             },
             onCancel: () => {
-                args.onCancel() || (() => null);
+                args.onCancel(reference) || (() => null);
             },
         };
 

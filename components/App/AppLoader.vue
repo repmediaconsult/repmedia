@@ -11,7 +11,7 @@ withDefaults(defineProps<{ text?: string; active: boolean }>(), {
             class="cursor-progress text-center flex-col flex backdrop-blur-sm items-center justify-center z-[1000] fixed top-0 h-full w-full left-0 bg-[rgba(0,0,0,0.5)]">
             <div class="flex items-center justify-center flex-col pointer-events-none">
                 <div class="animated">
-                    <AppIcon name="repmedia" class="animated-svg" />
+                    <AppIcon name="repmedia-mark" class="animated-svg" />
                 </div>
 
                 <div class="mt-4 text-white text-[24px] font-[700] leading-[28px] capitalize flex items-baseline">

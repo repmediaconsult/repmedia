@@ -1,4 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const testimonials = [
+    {
+        image: "aaron.webp",
+        person: "Aaron Bankole",
+        role: "Graphic Designer",
+        message:
+            "“ The team helped me go from zero interviews to multiple offers! I still get relevant connections and engagements on my LinkedIn because of their good work.”",
+    },
+    {
+        image: "sarah.webp",
+        person: "Sarah Johnson",
+        role: "Content Marketing Specialist",
+        message:
+            "“ I'll always recommend RepMedia. Very attentive to detail and can document your experiences, however big or small. RepMedia cancels the chances of selling yourself short”",
+    },
+    {
+        image: "jesse.webp",
+        person: "Jesse Irabor",
+        role: "Data Analyst",
+        message:
+            "“Your portfolio review and cv revamping helped me refine my work and present it in a visually stunning way that I didn't think possible. I got many offers and finally found the perfect role”",
+    },
+];
+</script>
 
 <template>
     <section class="py-[56px] md:py-[90px] bg-white relative">
@@ -11,9 +35,7 @@
                 Our clients have many good things to say about our services and the quality of our work.
             </p>
             <ul class="grid gap-5 w-full max-w-[1160px] mx-auto">
-                <TestimonialCard />
-                <TestimonialCard />
-                <TestimonialCard />
+                <TestimonialCard v-for="testimonial in testimonials" :key="testimonial.person" :testimonial />
             </ul>
         </div>
     </section>

@@ -38,7 +38,7 @@ const pricing: Pricing[] = [
     {
         icon: "crown",
         name: "premium",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        description: "The comprehensive package you need to enhance every aspect of your professional profile.",
         pricing: { "0_5": 100, "6_10": 150, "11_15": 200, "15+": 250 },
         checklist: generateChecklist(true, true, true),
     },

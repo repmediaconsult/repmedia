@@ -10,8 +10,8 @@ const heroTexts = [
 ];
 
 const texts = [
-    "Become the one in a million candidate. Make the most out of opportunities and stand out in the competitive job market.",
-    "Which of our services are you are interested in?",
+    "We are a Premier Branding firm dedicated to helping individuals and corporations create, refine, and amplify their unique identities; specialized in personal branding for professionals in diverse fields and corporate branding for businesses of all sizes. ",
+    "Let's unleash your full potential, whether it's for your personal or corporate brand.",
 ];
 
 onMounted(() => {
@@ -25,7 +25,7 @@ onMounted(() => {
 <template>
     <section class="min-h-[743px] flex items-center justify-center py-[80px]">
         <div class="app-container flex items-center justify-between gap-8 sm:gap-10 md:gap-12 xl:gap-[63px] flex-wrap lg:flex-nowrap relative z-1">
-            <div class="space-y-5 max-w-[660px] xl:max-w-[705px]">
+            <div class="space-y-5 max-w-[660px] xl:max-w-[765px]">
                 <div>
                     <p class="text-white font-medium text-xl md:text-[27px] leading-9">Welcome to</p>
                     <div class="typewriter py-1">
@@ -36,11 +36,11 @@ onMounted(() => {
                 </div>
                 <p v-for="(text, index) in texts" :key="index" class="text-white text-base md:text-lg leading-9">{{ text }}</p>
                 <div class="flex flex-wrap items-center gap-5">
-                    <NuxtLink class="branding bg-white text-[#0F0F0F] border border-black" to="/personal-branding">
+                    <NuxtLink class="branding bg-white text-[#0F0F0F] border border-black" to="/personalbranding">
                         Personal Branding
                         <AppIcon name="arrow-right-line" />
                     </NuxtLink>
-                    <NuxtLink class="branding bg-[#3782CA] text-white" to="/corporate-branding">
+                    <NuxtLink class="branding bg-[#3782CA] text-white" to="/corporatebranding">
                         Corporate Branding
                         <AppIcon name="arrow-right-line" />
                     </NuxtLink>

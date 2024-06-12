@@ -44,8 +44,8 @@ const howWeWork = [
     {
         icon: "folder",
         image: "finalization.webp",
-        title: "Finalisation",
-        description: "Get your request in 3 - 4 working days and share feedback with the CV Advisor.",
+        title: "Delivery & Review",
+        description: "Our standard completion time is 3-4 working days, with a 24-hour emergency option available upon request for an additional fee.",
     },
 ];
 const selected = ref(howWeWork[0]);

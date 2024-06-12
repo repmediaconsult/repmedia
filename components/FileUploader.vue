@@ -19,7 +19,7 @@ const handleFileUpload = (event: Event, type: "upload" | "drag") => {
 
 <template>
     <div>
-        <span class="text-base text-[#505050]">Upload Resume</span>
+        <span class="text-base text-[#505050]">Upload your updated CV </span>
         <FileUploaderResult v-if="file" :file @cancel="file = undefined" />
         <div
             v-else

@@ -5,10 +5,11 @@
         <div class="app-container flex-wrap flex items-center justify-between gap-5">
             <div class="space-y-5 max-w-[613px]">
                 <h1 class="text-[50px] md:text-[60px] lg:text-[64px] leading-[52px] mg:leading-[60px] lg:leading-[80px] font-bold tracking-[4%]">
-                    Ease into better <span class="text-[#3782CA]">career</span> opportunities
+                    Stand Out in the Job Market with a <span class="text-[#3782CA]">tailor-made CV</span>
                 </h1>
                 <p class="paragraph text-[#505050]">
-                    Become the one in a million candidate. Make the most out of opportunities and stand out in the competitive job market.
+                    Our team of skilled writers will tailor your CV or portfolio to highlight your skills, expertise, and capabilities in a manner that is both
+                    relevant and impactful.
                 </p>
                 <NuxtLink
                     to="#consultation"

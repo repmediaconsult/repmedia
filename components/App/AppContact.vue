@@ -8,24 +8,17 @@ const supabase = useSupabaseClient();
 const contactOptions = [
     {
         icon: "call",
-        label: "Phone Number",
-        value: "2349075450934",
-        text: "234 (0) 907 545 0934",
+        label: "Whatsapp",
+        value: "2348067053996",
+        text: "234 (0) 806 705 3996",
         type: "tel",
     },
     {
         icon: "email",
         label: "Email",
-        value: "hello@repmedia.com",
-        text: "Hello@repmedia.com",
+        value: "hello@repmediaconsult.com",
+        text: "Hello@repmediaconsult.com",
         type: "email",
-    },
-    {
-        icon: "location",
-        label: "Location",
-        value: "2349075450934",
-        text: "London, United Kingdom",
-        type: "location",
     },
 ];
 
@@ -64,7 +57,9 @@ const sendMessage = async () => {
             <p class="section-title">contact us</p>
             <div class="flex flex-wrap gap-10">
                 <div class="max-w-[546px] flex flex-col gap-5">
-                    <h6 class="section-header">We are here to support you.</h6>
+                    <h6 class="section-header">
+                        {{ $route.name === "corporatebranding" ? "We make your business our business" : "Ready to take the next step in your career" }}
+                    </h6>
                     <ul class="flex flex-col gap-6">
                         <ContactCard v-for="contact in contactOptions" :key="contact.icon" :contact />
                     </ul>
