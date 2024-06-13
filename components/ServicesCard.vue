@@ -19,10 +19,10 @@ defineProps<Props>();
         <div class="flex flex-col gap-2">
             <h6 class="text-[#010101] text-xl font-medium group-hover:text-white">{{ service.title }}</h6>
             <p class="text-[#010101] opacity-60 text-sm group-hover:text-white">{{ service.content }}</p>
-            <button class="btn py-1 px-3 bg-white text-black text-[10px]" @click="navigateTo('/consultation')">
+            <NuxtLink to="#consultation" class="btn py-1 px-3 bg-white text-black text-[10px]">
                 Get Started
                 <AppIcon name="arrow-right-line" />
-            </button>
+            </NuxtLink>
         </div>
     </li>
 </template>

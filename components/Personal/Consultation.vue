@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import { sectors, options, experiences } from "@/utils/constants";
+import { experiences } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "vue-sonner";
 
@@ -9,29 +9,27 @@ const { paystackScriptLoaded, payWithPaystack } = usePaystack();
 const supabase = useSupabaseClient();
 
 const rules = {
-    sector: { required },
-    milestones: { required },
-    years_of_experience: { required },
     goals: { required },
-    has_updated_resume: { required },
+    years_of_experience: { required },
+    role: { required },
+    milestones: { required },
     email: { required, email },
 };
 const form = reactive({
-    sector: "",
-    years_of_experience: "",
     goals: "",
+    years_of_experience: "",
+    role: "",
     milestones: "",
-    has_updated_resume: "",
     email: "",
     services: [],
-    turnaround: "",
+    faster_turnaround: "",
 });
 const file = ref<File>();
 const v$ = useVuelidate(rules, form, { $autoDirty: true });
-const paymentCancelled = ref(false);
 
 const formIsInvalid = ref(false);
 const isLoading = ref(false);
+const paymentCancelled = ref(false);
 
 const amountPayable = computed(() => {
     return 10 * 100;
@@ -63,12 +61,13 @@ const handlePaymentSuccess = async (response: any) => {
             });
             if (!error) {
                 // upload file
-                await supabase.storage.from("submission_files").upload(file.value?.name, file.value, { upsert: false });
+                await supabase.storage.from("submission_files").upload(`${new Date().getTime()}_${file.value?.name}`, file.value, { upsert: false });
 
                 // create a new submission record in the db
                 const { error } = await supabase.from("submissions").insert({
                     id: uuidv4(),
                     ...form,
+                    faster_turnaround: form.faster_turnaround || "no",
                     services: form.services.join(", "),
                     file: file.value?.name,
                     payment_id: paymentUUID,
@@ -90,7 +89,7 @@ const handlePaymentSuccess = async (response: any) => {
 const handlePaymentCancelled = async (order_number: string) => {
     isLoading.value = false;
     toast.error("Payment was cancelled.");
-    if (!paymentCancelled) {
+    if (!paymentCancelled.value) {
         paymentCancelled.value = true;
         await $fetch("/api/services/email/cancelled", { method: "POST", body: { email: form.email, order_number } });
     }
@@ -102,7 +101,7 @@ const beginConsultation = async () => {
         formIsInvalid.value = true;
         return;
     }
-    if (paystackScriptLoaded) {
+    if (paystackScriptLoaded.value) {
         isLoading.value = true;
         payWithPaystack({ email: form.email, amount: amountPayable.value, onSuccess: handlePaymentSuccess, onCancel: handlePaymentCancelled });
     }
@@ -112,37 +111,35 @@ const beginConsultation = async () => {
 <template>
     <section id="consultation" class="pb-10">
         <div class="app-container flex flex-col gap-[80px]">
-            <div class="flex flex-col items-center justify-center text-center">
-                <h1 class="section-header">We’d like to learn more more about you. Let’s get started.</h1>
+            <div class="flex flex-col items-center justify-center text-center max-w-[948px] mx-auto space-y-5">
+                <h1 class="section-header">We’d like to know more about you</h1>
                 <p class="paragraph">
                     All the information we ask of you is crucial and will be carefully considered to tailor our services to your specific needs. We kindly
                     request you provide detailed responses for each field. We are fully GDPR-compliant and you can rest assured that any information you give us
-                    is completely secure. Check out our privacy policy for more information.
+                    is completely secure. Check out our <NuxtLink to="/" class="text-[#3782CA] underline">privacy policy</NuxtLink> for more information.
                 </p>
             </div>
             <div class="flex flex-col gap-10 w-full max-w-[948px] mx-auto">
-                <AppSelect
-                    v-model="form.sector"
-                    :options="sectors"
-                    label="What do you do effortlessly (This as to pertain to your career / business goals)?"
-                    placeholder="Select" />
+                <AppTextarea
+                    v-model="form.goals"
+                    label="What do you do effortlessly?"
+                    placeholder="This as to pertain to your career / business goals"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[141px]"
+                    class="font-circular" />
                 <AppSelect
                     v-model="form.years_of_experience"
                     :options="experiences"
                     label="How many years of work experience do you have ?"
                     placeholder="Select" />
-                <AppTextarea
-                    v-model="form.goals"
+                <AppInput
+                    v-model="form.role"
                     label="What role(s) or job title(s) would you like to apply for?"
-                    placeholder=""
+                    placeholder="Enter"
                     class="font-circular"
                     label-class="!font-normal"
-                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
-                <!-- <AppSelect
-                    v-model="form.has_updated_resume"
-                    :options
-                    label="Do you have your updated resume with your recent workplace for upload?"
-                    placeholder="Select" /> -->
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                <FileUploader v-model:file="file" />
                 <AppTextarea
                     v-model="form.milestones"
                     label="Did you achieve any notable milestones during your time at the previously mentioned positions in your CV? If so, please specify (e.g., promotions, sales growth, acquiring new company accounts, receiving awards for projects)."
@@ -150,14 +147,13 @@ const beginConsultation = async () => {
                     class="font-circular"
                     label-class="!font-normal"
                     input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
-                <FileUploader v-model:file="file" />
                 <AppInput
                     v-model="form.email"
                     name="email"
                     label="Email Address"
-                    placeholder="enter your email address"
+                    placeholder="Email address"
                     label-class="!font-normal"
-                    input-class="bg-white py-[10px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
                     class="font-circular" />
                 <div class="flex flex-col gap-[6px]">
                     <p class="text-[#505050] tetx-lg -tracking-[4%]">Select the services you're interested in.</p>
@@ -178,8 +174,8 @@ const beginConsultation = async () => {
                         Our standard turnaround time is 3-4 working days. Would you like a 24hours service? This option incurs a 50% surcharge.
                     </p>
                     <div class="flex items-center gap-5">
-                        <AppRadio v-model="form.turnaround" id="yes" value="yes" name="tunraround" label="Yes" />
-                        <AppRadio v-model="form.turnaround" id="no" value="no" name="tunraround" label="No" />
+                        <AppRadio v-model="form.faster_turnaround" id="yes" value="yes" name="tunraround" label="Yes" />
+                        <AppRadio v-model="form.faster_turnaround" id="no" value="no" name="tunraround" label="No" />
                     </div>
                 </div>
             </div>

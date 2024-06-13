@@ -4,7 +4,7 @@
     <section class="py-8 lg:py-10">
         <div class="app-container flex-wrap flex items-center justify-between gap-5">
             <div class="space-y-5 max-w-[613px]">
-                <h1 class="text-[50px] md:text-[60px] lg:text-[64px] leading-[52px] mg:leading-[60px] lg:leading-[80px] font-bold tracking-[4%]">
+                <h1 class="text-[50px] md:text-[60px] lg:text-[64px] leading-[52px] mg:leading-[60px] lg:leading-[80px] font-bold -tracking-[4%]">
                     Stand Out in the Job Market with a <span class="text-[#3782CA]">tailor-made CV</span>
                 </h1>
                 <p class="paragraph text-[#505050]">

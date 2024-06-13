@@ -10,7 +10,7 @@ const messages = [
 </script>
 
 <template>
-    <section class="py-10">
+    <section id="about" class="py-10">
         <div class="app-container flex flex-col lg:flex-row gap-5">
             <p class="shrink-0 text-[#3782CA] text-xl md:text-2xl lg:text-4xl !leading-9 lg:!leading-[56px] max-w-[261px]">Letter from our Founder</p>
             <div class="space-y-5 max-w-[956px]">

@@ -9,11 +9,11 @@ const socialMediaLinks = [
     },
 ];
 const footerLinks = [
-    { path: "/#services", title: "Services" },
-    { path: "/#pricing", title: "Pricing" },
-    { path: "/#consultation", title: "Consultation" },
+    { path: "/personalbranding#services", title: "Services" },
+    { path: "/personalbranding#pricing", title: "Pricing" },
     { path: "#contact", title: "Contact Us" },
     { path: "/#about", title: "About us" },
+    { path: "/privacypolicy", title: "Privacy Policy" },
 ];
 </script>
 

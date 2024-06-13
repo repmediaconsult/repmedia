@@ -108,11 +108,12 @@ const pricing: Pricing[] = [
                                 </li>
                             </ul>
                         </div>
-                        <button
+                        <NuxtLink
+                            to="#consultation"
                             class="btn mx-auto py-[7px] px-6 text-xl -tracking-[4%] transition-colors duration-300"
                             :class="price.name === 'popular' ? 'bg-white text-[#0F0F0F] hover:bg-[#0F0F0F] hover:text-white' : 'bg-black text-white'">
                             Get Started
-                        </button>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>

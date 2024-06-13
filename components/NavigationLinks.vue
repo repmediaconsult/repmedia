@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const navLinks = [
     { path: "/", name: "Home" },
-    { path: "/#pricing", name: "Pricing" },
+    { path: "/personalbranding#pricing", name: "Pricing" },
     { path: "https://calendly.com/repmediaconsult-info", name: "Consultation" },
     { path: "#contact", name: "Contact Us" },
     { path: "/#about", name: "About Us" },
@@ -16,7 +16,7 @@ const navLinks = [
                 :to="link.path"
                 class="text-lg font-medium hover:text-[#3782CA] transition-colors duration-300 pb-1"
                 :class="{
-                    'border-b-2 border-current': ($route.hash && link.path.includes($route.hash)) || (!$route.hash && link.path === '/'),
+                    'border-b-2 border-current': ($route.hash && link.path.includes($route.hash)) || (!$route.hash && link.path === '/' && $route.name !== 'index') ,
                 }"
                 :external="link.name === 'Consultation'"
                 >{{ link.name }}</NuxtLink

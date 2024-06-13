@@ -1,12 +1,4 @@
 <script setup lang="ts">
-const navLinks = [
-    { path: "/", name: "Home" },
-    { path: "/#pricing", name: "Pricing" },
-    { path: "/#consultation", name: "Consultation" },
-    { path: "#contact", name: "Contact Us" },
-    { path: "/#about", name: "About Us" },
-];
-
 const navIsOpen = ref(false);
 
 const isHomePage = computed(() => useRoute().name === "index");
