@@ -4,6 +4,7 @@ import { required, email } from "@vuelidate/validators";
 import { experiences } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "vue-sonner";
+import pricing from "@/data/pricing.json";
 
 const { paystackScriptLoaded, payWithPaystack } = usePaystack();
 const supabase = useSupabaseClient();
@@ -32,7 +33,16 @@ const isLoading = ref(false);
 const paymentCancelled = ref(false);
 
 const amountPayable = computed(() => {
-    return 10 * 100;
+    return selectectedPricing.value * 1505.1 * 100;
+});
+const selectectedPricing = computed(() => {
+    if (form.years_of_experience && form.services.length) {
+        const selected = pricing.data.find(
+            (pricing) => pricing.year_of_experience === form.years_of_experience && form.services.every((service) => pricing.combinations.includes(service))
+        );
+        return (selected?.amount ?? 1) * (form.faster_turnaround.toLowerCase() === "yes" ? 1.5 : 1);
+    }
+    return 0;
 });
 
 /*
@@ -67,6 +77,7 @@ const handlePaymentSuccess = async (response: any) => {
                 const { error } = await supabase.from("submissions").insert({
                     id: uuidv4(),
                     ...form,
+                    years_of_experience: experiencesMap[form.years_of_experience],
                     faster_turnaround: form.faster_turnaround || "no",
                     services: form.services.join(", "),
                     file: file.value?.name,
@@ -161,12 +172,7 @@ const beginConsultation = async () => {
                         <AppCheckbox v-model="form.services" id="resume" label="CV Review" name="service" value="CV Review" />
                         <AppCheckbox v-model="form.services" id="linkedin" label="LinkedIn Optimisation" name="service" value="LinkedIn Optimisation" />
                         <AppCheckbox v-model="form.services" id="cover-letter" label="Cover Letter" name="service" value="Cover Letter" />
-                        <AppCheckbox
-                            v-model="form.services"
-                            id="biography-portfolio"
-                            label="Biography / Portfolio"
-                            name="service"
-                            value="Biography / Portfolio" />
+                        <AppCheckbox v-model="form.services" id="biography-portfolio" label="Biography/Portfolio" name="service" value="Biography/Portfolio" />
                     </ul>
                 </div>
                 <div class="flex flex-col gap-[6px]">

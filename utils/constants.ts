@@ -1,11 +1,13 @@
 export const sectors = [{ value: "technology", label: "Technology" }];
 
-export const experiences = [
-    { value: "0-5 years", label: "0-5 years" },
-    { value: "5-10 years", label: "5-10 years" },
-    { value: "11-15 years", label: "11-15 years" },
-    { value: "15years+", label: "15years+" },
-];
+export const experiencesMap: Record<string, string> = {
+    "0-5": " 0-5 years",
+    "6-10": "6-10 years",
+    "11-15": "11-15 years",
+    "15+": "15years+",
+};
+
+export const experiences = Object.keys(experiencesMap).map((value) => ({ value, label: experiencesMap[value] }));
 
 export const options = [
     { value: "yes", label: "Yes" },
