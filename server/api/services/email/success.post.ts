@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
                 "X-Requested-With": "XMLHttpRequest",
             },
             body: JSON.stringify({
-                from: { email: "info@repmediaconsult.com" },
+                from: { email: "support@repmediaconsult.com" },
                 to: [{ email: "info@repmediaconsult.com" }],
                 subject: "Payment received for consultation",
                 personalization: [
