@@ -31,7 +31,7 @@ const footerLinks = [
                         </ul>
                     </div>
                     <div class="flex flex-col gap-5 md:gap-[34px]">
-                        <p class="text-white text-xl md:text-[24px] font-[450]">Our Social Media</p>
+                        <!-- <p class="text-white text-xl md:text-[24px] font-[450]">Our Social Media</p> -->
                         <ul class="flex flex-wrap gap-6">
                             <li v-for="link in socialMediaLinks" :key="link.name">
                                 <a :href="link.url" :title="link.name" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center">
@@ -43,7 +43,7 @@ const footerLinks = [
                 </div>
                 <div class="flex flex-wrap gap-4 justify-between items-center text-white font-dm-sans tracking-[2%] border-t border-[#393C40] pt-[30px]">
                     <p>©All rights reserved RepMedia {{ new Date().getFullYear() }}</p>
-                    <p class="">Made with love ❤️</p>
+                    <!-- <p class="">Made with love ❤️</p> -->
                 </div>
             </div>
         </div>

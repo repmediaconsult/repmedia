@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const images = ["/images/hero-1.png", "/images/hero-2.png"];
+const images = ["/images/hero-1.webp", "/images/hero-2.webp"];
 const currentIndex = ref(0);
 
 const heroTexts = [
