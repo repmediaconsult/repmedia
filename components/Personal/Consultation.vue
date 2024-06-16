@@ -32,10 +32,7 @@ const formIsInvalid = ref(false);
 const isLoading = ref(false);
 const paymentCancelled = ref(false);
 
-const amountPayable = computed(() => {
-    return selectectedPricing.value * 1505.1 * 100;
-});
-const selectectedPricing = computed(() => {
+const selectedPricing = computed(() => {
     if (form.years_of_experience && form.services.length) {
         const selected = pricing.data.find(
             (pricing) => pricing.year_of_experience === form.years_of_experience && form.services.every((service) => pricing.combinations.includes(service))
@@ -70,20 +67,36 @@ const handlePaymentSuccess = async (response: any) => {
                 currency: data.data.currency,
             });
             if (!error) {
-                // upload file
-                await supabase.storage.from("submission_files").upload(`${new Date().getTime()}_${file.value?.name}`, file.value, { upsert: false });
-
+                // upload file and get download url
+                let download_url = "";
+                const fileName = `${new Date().getTime()}_${file.value?.name}`;
+                const { error: uploadError } = await supabase.storage.from("submission_files").upload(fileName, file.value, { upsert: false });
+                if (!uploadError) {
+                    const { data } = await supabase.storage.from("submission_files").getPublicUrl(fileName, { download: true });
+                    if (data.publicUrl) download_url = data.publicUrl;
+                }
                 // create a new submission record in the db
-                const { error } = await supabase.from("submissions").insert({
+                const commonPayload = {
                     id: uuidv4(),
                     ...form,
                     years_of_experience: experiencesMap[form.years_of_experience],
                     faster_turnaround: form.faster_turnaround || "no",
                     services: form.services.join(", "),
-                    file: file.value?.name,
+                    file: fileName,
                     payment_id: paymentUUID,
-                });
+                };
+                const { error } = await supabase.from("submissions").insert(commonPayload);
                 if (!error) {
+                    await $fetch("/api/services/email/success", {
+                        method: "POST",
+                        body: {
+                            ...commonPayload,
+                            payment_ref: data.data.reference,
+                            currency: data.data.currency,
+                            amount: Number(data.data.amount / 100).toLocaleString(),
+                            download_url,
+                        },
+                    });
                     isLoading.value = false;
                     navigateTo({ name: "success" });
                 }
@@ -91,6 +104,7 @@ const handlePaymentSuccess = async (response: any) => {
         }
     } catch (error) {
         isLoading.value = false;
+        console.log(error);
         toast.error("An error occurred trying to complete your request. Please try again");
     } finally {
         isLoading.value = false;
@@ -114,7 +128,8 @@ const beginConsultation = async () => {
     }
     if (paystackScriptLoaded.value) {
         isLoading.value = true;
-        payWithPaystack({ email: form.email, amount: amountPayable.value, onSuccess: handlePaymentSuccess, onCancel: handlePaymentCancelled });
+        const amount = selectedPricing.value * 100 * 1500;
+        payWithPaystack({ email: form.email, amount, onSuccess: handlePaymentSuccess, onCancel: handlePaymentCancelled });
     }
 };
 </script>

@@ -12,18 +12,18 @@ export default defineEventHandler(async (event) => {
             },
             body: JSON.stringify({
                 from: { email: "info@repmediaconsult.com" },
-                to: [{ email: body.email }],
-                subject: "Payment cancelled",
+                to: [{ email: "info@repmediaconsult.com" }],
+                subject: "Payment received for consultation",
                 personalization: [
                     {
                         email: body.email,
-                        data: { order_number: body.order_number },
+                        data: { ...body },
                     },
                 ],
-                template_id: "jpzkmgqd28nl059v",
+                template_id: "3z0vklo01p7l7qrx",
             }),
         });
-        return { success: true, message: "Cancelled email succesfully sent" };
+        return { success: true, message: "Consultation request email succesfully sent" };
     } catch (error) {
         console.log("error", error);
         return { success: false };

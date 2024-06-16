@@ -1,7 +1,7 @@
 export const sectors = [{ value: "technology", label: "Technology" }];
 
 export const experiencesMap: Record<string, string> = {
-    "0-5": " 0-5 years",
+    "0-5": "0-5 years",
     "6-10": "6-10 years",
     "11-15": "11-15 years",
     "15+": "15years+",
