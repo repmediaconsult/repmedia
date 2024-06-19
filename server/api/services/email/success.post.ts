@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
                 subject: "Payment received for consultation",
                 personalization: [
                     {
-                        email: body.email,
+                        email: "info@repmediaconsult.com",
                         data: { ...body },
                     },
                 ],
