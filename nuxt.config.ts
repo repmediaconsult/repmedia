@@ -74,6 +74,8 @@ export default defineNuxtConfig({
         public: {
             paystackPublicKey: import.meta.env.PAYSTACK_PUBLIC_KEY,
             paystackSecretKey: import.meta.env.PAYSTACK_SECRET_KEY,
+            flutterwavePublicKey: import.meta.env.FLUTTERWAVE_PUBLIC_KEY,
+            flutterwaveSecretKey: import.meta.env.FLUTTERWAVE_SECRET_KEY,
             supabaseUrl: import.meta.env.SUPABASE_URL,
             supabaseKey: import.meta.env.SUPABASE_KEY,
             mailersendToken: import.meta.env.MAILERSEND_TOKEN,

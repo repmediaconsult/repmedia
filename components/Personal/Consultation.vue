@@ -6,8 +6,11 @@ import { v4 as uuidv4 } from "uuid";
 import { toast } from "vue-sonner";
 import pricing from "@/data/pricing.json";
 
-const { paystackScriptLoaded, payWithPaystack } = usePaystack();
+// const { paystackScriptLoaded, payWithPaystack } = usePaystack();
+const { flutterwaveScriptMounted, payWithFlutterwave } = useFlutterwave();
+
 const supabase = useSupabaseClient();
+// const config = useRuntimeConfig();
 
 const rules = {
     goals: { required },
@@ -43,7 +46,7 @@ const selectedPricing = computed(() => {
 });
 
 /*
-    Handle Paystack Payment Response
+    Handle Paystack/Flutterwave Payment Response
     - First of, there's the need to verify the transaction that it works and what not
     - After we confirm that payment was successful,we first then create a new record in the payments data
     - Once payment have been confirmed, we can then go ahead to create the entry for this submission in the database
@@ -51,19 +54,21 @@ const selectedPricing = computed(() => {
 */
 const handlePaymentSuccess = async (response: any) => {
     try {
-        const { success, data } = await $fetch<any>(`/api/services/verify/${response.reference}`);
-
-        if (success && data.data.status === "success") {
+        const { success, data } = await $fetch<any>("/api/services/flutterwave/verify", {
+            method: "POST",
+            body: { id: response.transaction_id, amount: selectedPricing.value, currency: "USD" },
+        });
+        if (success && data.data.status === "successful") {
             // creates a new payment record in the DB
             const paymentUUID = uuidv4();
             const { error } = await supabase.from("payments").insert({
                 id: paymentUUID,
-                payment_ref: data.data.reference,
+                payment_ref: data.data.tx_ref,
                 email: data.data.customer.email,
                 transaction: data.data.id,
                 amount: String(data.data.amount),
                 status: data.data.status,
-                channel: data.data.channel,
+                channel: data.data.payment_type,
                 currency: data.data.currency,
             });
             if (!error) {
@@ -91,9 +96,9 @@ const handlePaymentSuccess = async (response: any) => {
                         method: "POST",
                         body: {
                             ...commonPayload,
-                            payment_ref: data.data.reference,
+                            payment_ref: data.data.tx_ref,
                             currency: data.data.currency,
-                            amount: Number(data.data.amount / 100).toLocaleString(),
+                            amount: Number(data.data.amount).toLocaleString(),
                             download_url,
                         },
                     });
@@ -111,10 +116,11 @@ const handlePaymentSuccess = async (response: any) => {
     }
 };
 
-const handlePaymentCancelled = async (order_number: string) => {
+const handlePaymentCancelled = async (incomplete: boolean, order_number: string) => {
+    console.log('incomplete', incomplete, order_number)
     isLoading.value = false;
-    toast.error("Payment was cancelled.");
-    if (!paymentCancelled.value) {
+    if (incomplete) toast.error("Payment was cancelled.");
+    if (!paymentCancelled.value && incomplete) {
         paymentCancelled.value = true;
         await $fetch("/api/services/email/cancelled", { method: "POST", body: { email: form.email, order_number } });
     }
@@ -126,10 +132,23 @@ const beginConsultation = async () => {
         formIsInvalid.value = true;
         return;
     }
-    if (paystackScriptLoaded.value) {
+    // Pay with paystack
+    // if (paystackScriptLoaded.value) {
+    //     isLoading.value = true;
+    //     const amount = selectedPricing.value * 100 * 1500;
+    //     payWithPaystack({ email: form.email, amount, onSuccess: handlePaymentSuccess, onCancel: handlePaymentCancelled });
+    // }
+    if (flutterwaveScriptMounted.value) {
         isLoading.value = true;
-        const amount = selectedPricing.value * 100 * 1500;
-        payWithPaystack({ email: form.email, amount, onSuccess: handlePaymentSuccess, onCancel: handlePaymentCancelled });
+        const amount = selectedPricing.value;
+        payWithFlutterwave({
+            customer: { email: form.email, phone_number: "", name: "" },
+            currency: "USD",
+            payment_options: "card, banktransfer, ussd",
+            amount,
+            callback: handlePaymentSuccess,
+            onclose: handlePaymentCancelled,
+        });
     }
 };
 </script>
@@ -210,7 +229,7 @@ const beginConsultation = async () => {
                             <AppIcon name="close" />
                         </button>
                     </div>
-                    <p>Please select an option here</p>
+                    <p>Kindly confirm your inputs</p>
                 </div>
                 <button
                     class="btn btn-outline hover:!bg-[#3782CA] hover:border-[transparent] w-fit mx-auto px-6 py-[10px] rounded-[24px] transition-colors duration-300 flex items-center gap-1"
