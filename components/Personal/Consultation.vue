@@ -211,7 +211,7 @@ const beginConsultation = async () => {
                 </div>
                 <div class="flex flex-col gap-[6px]">
                     <p class="text-[#505050] tetx-lg -tracking-[4%]">
-                        Our standard turnaround time is 3-4 working days. Would you like a 24hours service? This option incurs a 50% surcharge.
+                        Our standard turnaround time is 3-4 working days. Would you like a 24 hours service? This option incurs a 50% surcharge.
                     </p>
                     <div class="flex items-center gap-5">
                         <AppRadio v-model="form.faster_turnaround" id="yes" value="yes" name="tunraround" label="Yes" />
