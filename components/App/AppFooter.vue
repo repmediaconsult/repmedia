@@ -42,7 +42,7 @@ const footerLinks = [
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-4 justify-between items-center text-white font-dm-sans tracking-[2%] border-t border-[#393C40] pt-[30px]">
-                    <p>©All rights reserved RepMedia {{ new Date().getFullYear() }}</p>
+                    <p>© All rights reserved. RepMedia {{ new Date().getFullYear() }}.</p>
                     <!-- <p class="">Made with love ❤️</p> -->
                 </div>
             </div>
