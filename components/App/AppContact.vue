@@ -17,7 +17,7 @@ const contactOptions = [
         icon: "email",
         label: "Email",
         value: "hello@repmediaconsult.com",
-        text: "Hello@repmediaconsult.com",
+        text: "hello@repmediaconsult.com",
         type: "email",
     },
 ];
