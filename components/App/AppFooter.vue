@@ -12,7 +12,7 @@ const footerLinks = [
     { path: "/personalbranding#services", title: "Services" },
     { path: "/personalbranding#pricing", title: "Pricing" },
     { path: "#contact", title: "Contact Us" },
-    { path: "/#about", title: "About us" },
+    { path: "/#about", title: "About Us" },
     { path: "/privacypolicy", title: "Privacy Policy" },
 ];
 </script>
