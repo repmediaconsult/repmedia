@@ -20,6 +20,13 @@ const contactOptions = [
         text: "hello@repmediaconsult.com",
         type: "email",
     },
+    {
+        icon: "location",
+        label: "Business Address",
+        value: "Building 528, Jakande Estate, Mile 2. Lagos state. Nigeria",
+        text: "Building 528, Jakande Estate, Mile 2. Lagos state. Nigeria",
+        type: "location",
+    },
 ];
 
 const isLoading = ref(false);
