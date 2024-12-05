@@ -14,6 +14,7 @@ const footerLinks = [
     { path: "#contact", title: "Contact Us" },
     { path: "/#about", title: "About Us" },
     { path: "/privacypolicy", title: "Privacy Policy" },
+    { path: "/termsandconditions", title: "Terms and conditions" },
 ];
 </script>
 
