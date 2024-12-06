@@ -62,7 +62,7 @@ As part of our ongoing commitment to 100% customer satisfaction, we guarantee to
                 <div v-for="policy in policies" :key="policy.title" class="text-[#505050]">
                     <h6><b>{{ policy.title }}</b></h6>
                     <ul v-if="policy.list?.length" class="list-disc pl-5">
-                        <template v-for="(item, index) in policy.list">
+                        <template v-for="(item, index) in policy.list[0].split('<br><br>')">
                             <p class="-ml-5">{{ item }}</p>
                         </template>
                     </ul>
