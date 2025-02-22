@@ -16,7 +16,7 @@
                     with your target market.
                 </p>
                 <NuxtLink class="btn btn-outline py-[10px] hover:!bg-[#3782CA] hover:!border-[transparent] px-6" to="#process">
-                    Learn More
+                    Talk to an Expert
                     <AppIcon name="arrow-right-line" />
                 </NuxtLink>
             </div>

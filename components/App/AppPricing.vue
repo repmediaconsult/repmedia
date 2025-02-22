@@ -43,6 +43,9 @@ const pricing: Pricing[] = [
         checklist: generateChecklist(true, true, true),
     },
 ];
+
+const pricingOptionsSelect: Array<Object> = [];
+pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name}));
 </script>
 
 <template>
@@ -58,7 +61,7 @@ const pricing: Pricing[] = [
             </div>
             <div class="space-y-5">
                 <div class="w-full max-w-[601px] mx-auto">
-                    <ul class="flex overflow-x-scroll gap-[11px] p-1 rounded-[24px] bg-[#161A34] w-full">
+                    <ul id="org-ys" class="flex overflow-x-scroll gap-[11px] p-1 rounded-[24px] bg-[#161A34] w-full">
                         <li
                             v-for="option in pricingOptions"
                             :key="option.key"
@@ -68,6 +71,13 @@ const pricing: Pricing[] = [
                             {{ option.name }}
                         </li>
                     </ul>
+                </div>
+                <div style="display: none;" id="mob-ys">
+                    <AppSelect
+                    @change = "(v: string) => selectedOption = v"
+                    :options = "pricingOptionsSelect"
+                    placeholder="Select number of years"
+                    label="" />
                 </div>
                 <div class="w-full pricing grid gap-[13px] max-w-[1031px] mx-auto">
                     <div
@@ -132,5 +142,14 @@ ul {
 
 .pricing {
     grid-template-columns: repeat(auto-fit, minmax(335px, 1fr));
+}
+
+@media only screen and (max-width: 610px) {
+    #org-ys {
+        display: none;
+    }
+    #mob-ys {
+        display: block !important;
+    }
 }
 </style>

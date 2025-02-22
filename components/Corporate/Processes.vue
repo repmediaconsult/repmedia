@@ -55,7 +55,7 @@ onUnmounted(() => {
             </p>
             <div class="space-y-10">
                 <div class="flex items-center justify-center relative tabs">
-                    <ul class="max-w-[1125px] flex flex-nowrap gap-10 mx-auto w-full overflow-y-hidden overflow-x-scroll">
+                    <ul id="4s-ul" class="max-w-[1125px] flex flex-nowrap gap-10 mx-auto w-full overflow-y-hidden overflow-x-scroll">
                         <li
                             v-for="(process, index) in processes"
                             class="py-2 lg:py-3 shrink-0 cursor-pointer tex-lg lg:text-2xl"
@@ -99,5 +99,11 @@ ul {
 .tabs::after {
     content: "";
     @apply h-[1px] w-full bg-[#CACACA] absolute bottom-[1px] -z-[1] max-w-[1125px] mx-auto left-[45%] -translate-x-[45%];
+}
+@media only screen and (max-width: 1180px) {
+    ul {
+        flex-direction: column;
+        gap: 0;
+    }
 }
 </style>

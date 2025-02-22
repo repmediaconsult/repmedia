@@ -11,6 +11,12 @@ interface InputProps {
 defineProps<InputProps>();
 
 const modelValue = defineModel<string>({ default: "" });
+const emit = defineEmits(['update:modelValue', 'change']);
+
+watch(modelValue, (newValue) => {
+    emit('change', newValue);
+});
+
 </script>
 
 <template>

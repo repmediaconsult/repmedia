@@ -160,8 +160,7 @@ const beginConsultation = async () => {
                 <h1 class="section-header">We’d like to know more about you</h1>
                 <p class="paragraph">
                     All the information we ask of you is crucial and will be carefully considered to tailor our services to your specific needs. We kindly
-                    request you provide detailed responses for each field. We are fully GDPR-compliant and you can rest assured that any information you give us
-                    is completely secure. Check out our <NuxtLink to="/" class="text-[#3782CA] underline">privacy policy</NuxtLink> for more information.
+                    request you provide detailed responses for each field.
                 </p>
             </div>
             <div class="flex flex-col gap-10 w-full max-w-[948px] mx-auto">
@@ -218,6 +217,10 @@ const beginConsultation = async () => {
                         <AppRadio v-model="form.faster_turnaround" id="no" value="no" name="tunraround" label="No" />
                     </div>
                 </div>
+                <p class="text-sm text-[#7E8492]">
+                    We are fully GDPR-compliant and you can rest assured that any information you give us
+                    is completely secure. Check out our <NuxtLink to="/privacypolicy" class="text-[#3782CA] underline">privacy policy</NuxtLink> for more information.
+                </p>
             </div>
             <div class="relative w-full">
                 <div

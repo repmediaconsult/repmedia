@@ -5,9 +5,9 @@
     <div class="space-y-10">
         <CorporateCompanies />
         <CorporateProcesses />
+        <CorporateCTA />
         <AppTestimonials />
     </div>
-    <CorporateCTA />
 </template>
 
 <style scoped></style>

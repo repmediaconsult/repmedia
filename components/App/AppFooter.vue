@@ -11,7 +11,7 @@ const socialMediaLinks = [
 const footerLinks = [
     { path: "/personalbranding#services", title: "Services" },
     { path: "/personalbranding#pricing", title: "Pricing" },
-    { path: "#contact", title: "Contact Us" },
+    // { path: "#contact", title: "Contact Us" },
     { path: "/#about", title: "About Us" },
     { path: "/privacypolicy", title: "Privacy Policy" },
     { path: "/termsandconditions", title: "Terms and conditions" },

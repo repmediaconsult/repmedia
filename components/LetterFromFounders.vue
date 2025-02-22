@@ -22,7 +22,7 @@ const messages = [
                 <div>
                     <!-- <img src="/images/founder-signature.png" class="h-auto block w-auto max-w-[275px] max-h-[86px]" alt="repmedia founder signature" /> -->
                     <p class="font-semibold text-xl font-caveat">Bamiyo Awonusi</p>
-                    <p class="font-medium">CEO, Rep Media</p>
+                    <p class="font-medium">Founder, Rep Media</p>
                 </div>
             </div>
         </div>

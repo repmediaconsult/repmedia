@@ -23,8 +23,8 @@ const contactOptions = [
     {
         icon: "location",
         label: "Business Address",
-        value: "Building 528, Jakande Estate, Mile 2. Lagos state. Nigeria",
-        text: "Building 528, Jakande Estate, Mile 2. Lagos state. Nigeria",
+        value: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
+        text: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
         type: "location",
     },
 ];
