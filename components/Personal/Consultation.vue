@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import { experiences } from "@/utils/constants";
+import { experiences, currencies } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "vue-sonner";
 import pricing from "@/data/pricing.json";
+import { useRuntimeConfig } from '#app';
 
 // const { paystackScriptLoaded, payWithPaystack } = usePaystack();
 const { flutterwaveScriptMounted, payWithFlutterwave } = useFlutterwave();
@@ -18,6 +19,7 @@ const rules = {
     role: { required },
     milestones: { required },
     email: { required, email },
+    currency: { required },
 };
 const form = reactive({
     goals: "",
@@ -27,6 +29,7 @@ const form = reactive({
     email: "",
     services: [],
     faster_turnaround: "",
+    currency: "",
 });
 const file = ref<File>();
 const v$ = useVuelidate(rules, form, { $autoDirty: true });
@@ -44,6 +47,17 @@ const selectedPricing = computed(() => {
     }
     return 0;
 });
+
+const config = useRuntimeConfig();
+
+const convertedAmount = ref(0);
+const convertedData = ref("");
+const lastConversion = ref("");
+
+if (process.client) {
+  convertedData.value = localStorage.getItem("currencyConversions");
+  lastConversion.value = localStorage.getItem("lastConversion");
+}
 
 /*
     Handle Paystack/Flutterwave Payment Response
@@ -132,6 +146,24 @@ const beginConsultation = async () => {
         formIsInvalid.value = true;
         return;
     }
+
+    if(form.currency != "USD"){
+        if(!convertedData.value){
+            await getCurrencyConversions();
+        } else{
+            const timestamp = Math.round(new Date().getTime() / 1000);
+            const min_diff = (timestamp - parseInt(lastConversion.value)) / 60;
+            if(min_diff > 60){
+                await getCurrencyConversions();
+            }
+        }
+
+        const converted = convertAmount();
+        if(!converted){
+            toast.error("An error occurred trying to get currency conversion. Please try again");
+            return;
+        }
+    }
     // Pay with paystack
     // if (paystackScriptLoaded.value) {
     //     isLoading.value = true;
@@ -140,10 +172,10 @@ const beginConsultation = async () => {
     // }
     if (flutterwaveScriptMounted.value) {
         isLoading.value = true;
-        const amount = selectedPricing.value;
+        const amount = form.currency == "USD" ? selectedPricing.value : convertedAmount.value;
         payWithFlutterwave({
             customer: { email: form.email, phone_number: "", name: "" },
-            currency: "USD",
+            currency: form.currency,
             payment_options: "card, banktransfer, ussd",
             amount,
             callback: handlePaymentSuccess,
@@ -151,6 +183,27 @@ const beginConsultation = async () => {
         });
     }
 };
+
+const getCurrencyConversions = async () => {
+    const { success, data } = await $fetch<any>("/api/services/currency/conversions");
+    if (success && data?.result === "success") {
+        if (process.client) {
+            localStorage.setItem("currencyConversions", JSON.stringify(data.conversion_rates ?? null));
+            localStorage.setItem("lastConversion", Math.round(new Date().getTime() / 1000).toString());
+
+            convertedData.value = localStorage.getItem("currencyConversions");
+            lastConversion.value = localStorage.getItem("lastConversion");
+        }
+    }
+}
+
+const convertAmount: () => boolean = () => {
+    if(!localStorage.getItem("currencyConversions")) return false;
+    const curr_data = JSON.parse(convertedData.value);
+    const amount = (curr_data[form.currency] * selectedPricing.value).toFixed(2);
+    convertedAmount.value = parseFloat(amount);
+    return true;
+}
 </script>
 
 <template>
@@ -217,6 +270,11 @@ const beginConsultation = async () => {
                         <AppRadio v-model="form.faster_turnaround" id="no" value="no" name="tunraround" label="No" />
                     </div>
                 </div>
+                <AppSelect
+                    v-model="form.currency"
+                    :options="currencies"
+                    label="What currency would you like to pay in?"
+                    placeholder="Select currency" />
                 <p class="text-sm text-[#7E8492]">
                     We are fully GDPR-compliant and you can rest assured that any information you give us
                     is completely secure. Check out our <NuxtLink to="/privacypolicy" class="text-[#3782CA] underline">privacy policy</NuxtLink> for more information.

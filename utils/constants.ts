@@ -13,3 +13,9 @@ export const options = [
     { value: "yes", label: "Yes" },
     { value: "no", label: "No" },
 ];
+
+export const currencies = [
+    { value: "USD", label: "USD" },
+    { value: "EUR", label: "EUR" },
+    { value: "NGN", label: "NGN" },
+];
