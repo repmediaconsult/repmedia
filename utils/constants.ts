@@ -18,4 +18,5 @@ export const currencies = [
     { value: "USD", label: "USD" },
     { value: "EUR", label: "EUR" },
     { value: "NGN", label: "NGN" },
+    { value: "GBP", label: "GBP" },
 ];
