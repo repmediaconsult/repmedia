@@ -103,9 +103,14 @@ pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name})
                                 <p class="text-sm text-[#7E8492]">{{ price.description }}</p>
                             </div>
                         </div>
-                        <h6 class="text-[32px] leading-[42px] -tracking-[1px]" :class="price.name === 'popular' ? 'text-white' : 'text-[#1D1E25]'">
-                            ${{ price.pricing[selectedOption] }}
-                        </h6>
+                        <div class="flex">
+                            <h6 style="text-decoration: line-through; font-size: 23px;" class="text-[32px] leading-[42px] -tracking-[1px]" :class="price.name === 'popular' ? 'text-white' : 'text-[#1D1E25]'">
+                                ${{ price.pricing[selectedOption] }}
+                            </h6>
+                            <h6 class="text-[32px] leading-[42px] -tracking-[1px] mx-2" :class="price.name === 'popular' ? 'text-white' : 'text-[#1D1E25]'">
+                                ${{ price.pricing[selectedOption] - (price.pricing[selectedOption] * 0.25) }}
+                            </h6>
+                        </div>
                         <div class="space-y-4">
                             <p class="font-bold" :class="[price.name === 'popular' ? 'text-white' : 'text-[#1D1E25]']">What’s included:</p>
                             <ul class="space-y-4">

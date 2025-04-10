@@ -43,7 +43,8 @@ const selectedPricing = computed(() => {
         const selected = pricing.data.find(
             (pricing) => pricing.year_of_experience === form.years_of_experience && form.services.every((service) => pricing.combinations.includes(service))
         );
-        return (selected?.amount ?? 1) * (form.faster_turnaround.toLowerCase() === "yes" ? 1.5 : 1);
+        const amount = (selected?.amount ?? 1) * (form.faster_turnaround.toLowerCase() === "yes" ? 1.5 : 1);
+        return amount - (amount * 0.25);
     }
     return 0;
 });
