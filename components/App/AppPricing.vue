@@ -79,6 +79,9 @@ pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name})
                     placeholder="Select number of years"
                     label="" />
                 </div>
+                <div class="flex justify-center">
+                    <img class="div-25 pulse-glow" src="/images/25-percent.png" style="border-radius: 15px;" alt="25%" />
+                </div>
                 <div class="w-full pricing grid gap-[13px] max-w-[1031px] mx-auto">
                     <div
                         v-for="price in pricing"
@@ -156,5 +159,26 @@ ul {
     #mob-ys {
         display: block !important;
     }
+}
+
+@media only screen and (min-width: 1120px) {
+    .div-25 {
+        width: 75%;
+    }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    /* transform: scale(1); */
+    box-shadow: 0 0 0 0 rgba(22, 26, 52, 0.7);
+  }
+  50% {
+    /* transform: scale(1.05); */
+    box-shadow: 0 0 0 10px rgba(22, 26, 52, 0);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
 }
 </style>
