@@ -37,6 +37,7 @@ const v$ = useVuelidate(rules, form, { $autoDirty: true });
 const formIsInvalid = ref(false);
 const isLoading = ref(false);
 const paymentCancelled = ref(false);
+const flwObj = ref({});
 
 const selectedPricing = computed(() => {
     if (form.years_of_experience && form.services.length) {
@@ -71,7 +72,7 @@ const handlePaymentSuccess = async (response: any) => {
     try {
         const { success, data } = await $fetch<any>("/api/services/flutterwave/verify", {
             method: "POST",
-            body: { id: response.transaction_id, amount: selectedPricing.value, currency: "USD" },
+            body: { id: response.transaction_id, amount: form.currency == "USD" ? selectedPricing.value : convertedAmount.value, currency: form.currency },
         });
         if (success && data.data.status === "successful") {
             // creates a new payment record in the DB
@@ -118,10 +119,12 @@ const handlePaymentSuccess = async (response: any) => {
                         },
                     });
                     isLoading.value = false;
-                    navigateTo({ name: "success" });
                 }
             }
-        }
+
+            flwObj.value.close();
+            navigateTo({ name: "success" });
+        } else navigateTo({ name: "error" });
     } catch (error) {
         isLoading.value = false;
         console.log(error);
@@ -174,7 +177,7 @@ const beginConsultation = async () => {
     if (flutterwaveScriptMounted.value) {
         isLoading.value = true;
         const amount = form.currency == "USD" ? selectedPricing.value : convertedAmount.value;
-        payWithFlutterwave({
+        flwObj.value = payWithFlutterwave({
             customer: { email: form.email, phone_number: "", name: "" },
             currency: form.currency,
             payment_options: "card, banktransfer, ussd",

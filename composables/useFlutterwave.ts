@@ -42,7 +42,7 @@ export default function useFlutterwave() {
         };
 
         // @ts-ignore
-        window.FlutterwaveCheckout(payData);
+        return window.FlutterwaveCheckout(payData);
     };
 
     onMounted(() => {
