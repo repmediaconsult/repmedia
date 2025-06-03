@@ -32,6 +32,8 @@ const form = reactive({
     currency: "",
 });
 const file = ref<File>();
+const base64File = ref("");
+const paymentDetails = ref("");
 const v$ = useVuelidate(rules, form, { $autoDirty: true });
 
 const formIsInvalid = ref(false);
@@ -75,52 +77,30 @@ const handlePaymentSuccess = async (response: any) => {
             body: { id: response.transaction_id, amount: form.currency == "USD" ? selectedPricing.value : convertedAmount.value, currency: form.currency },
         });
         if (success && data.data.status === "successful") {
-            // creates a new payment record in the DB
-            const paymentUUID = uuidv4();
-            const { error } = await supabase.from("payments").insert({
-                id: paymentUUID,
-                payment_ref: data.data.tx_ref,
-                email: data.data.customer.email,
-                transaction: data.data.id,
-                amount: String(data.data.amount),
-                status: data.data.status,
-                channel: data.data.payment_type,
-                currency: data.data.currency,
+            paymentDetails.value = "Payment details<br><ul>";
+            Object.entries(form).forEach(([key, value]) => {
+                paymentDetails.value += `<li>${key.toUpperCase()}: ${Array.isArray(value) ? value.join(', ') : value}</li>`;
             });
-            if (!error) {
-                // upload file and get download url
-                let download_url = "";
-                const fileName = `${new Date().getTime()}_${file.value?.name}`;
-                const { error: uploadError } = await supabase.storage.from("submission_files").upload(fileName, file.value, { upsert: false });
-                if (!uploadError) {
-                    const { data } = await supabase.storage.from("submission_files").getPublicUrl(fileName, { download: true });
-                    if (data.publicUrl) download_url = data.publicUrl;
-                }
-                // create a new submission record in the db
-                const commonPayload = {
-                    id: uuidv4(),
-                    ...form,
-                    years_of_experience: experiencesMap[form.years_of_experience],
-                    faster_turnaround: form.faster_turnaround || "no",
-                    services: form.services.join(", "),
-                    file: fileName,
-                    payment_id: paymentUUID,
-                };
-                const { error } = await supabase.from("submissions").insert(commonPayload);
-                if (!error) {
-                    await $fetch("/api/services/email/success", {
-                        method: "POST",
-                        body: {
-                            ...commonPayload,
-                            payment_ref: data.data.tx_ref,
-                            currency: data.data.currency,
-                            amount: Number(data.data.amount).toLocaleString(),
-                            download_url,
-                        },
-                    });
-                    isLoading.value = false;
-                }
-            }
+            paymentDetails.value += `<li>PAYMENT REF: ${data.data.tx_ref}</li><li>PAYMENT CHANNEL: ${data.data.payment_type}</li><li>PAYMENT AMOUNT: ${data.data.amount}</li></ul>`;
+
+            const { res } = await $fetch<any>("/api/services/email/sg", {
+                method: "POST",
+                body: {
+                    content: paymentDetails.value,
+                    ...(file.value ? {
+                        file: {
+                            file_name: file.value.name, 
+                            base64_file: base64File.value, 
+                            type: file.value.type
+                        }
+                        }: {}),
+                    email: {
+                        subject: "Payment received for consultation"
+                    }
+                },
+            });
+            console.log(res);
+            isLoading.value = false;
 
             flwObj.value.close();
             navigateTo({ name: "success" });
@@ -140,7 +120,16 @@ const handlePaymentCancelled = async (incomplete: boolean, order_number: string)
     if (incomplete) toast.error("Payment was cancelled.");
     if (!paymentCancelled.value && incomplete) {
         paymentCancelled.value = true;
-        await $fetch("/api/services/email/cancelled", { method: "POST", body: { email: form.email, order_number } });
+        const { res } = await $fetch<any>("/api/services/email/sg", {
+            method: "POST",
+            body: {
+                content: `Details<br><ul><li>EMAIL: ${form.email}</li><li>ORDER NUMBER: ${order_number}</li></ul>`,
+                email: {
+                    subject: "Payment cancelled"
+                }
+            },
+        });
+        console.log(res);
     }
 };
 
@@ -151,6 +140,7 @@ const beginConsultation = async () => {
         return;
     }
 
+    readFileAsBase64();
     if(form.currency != "USD"){
         if(!convertedData.value){
             await getCurrencyConversions();
@@ -207,6 +197,21 @@ const convertAmount: () => boolean = () => {
     const amount = (curr_data[form.currency] * selectedPricing.value).toFixed(2);
     convertedAmount.value = parseFloat(amount);
     return true;
+}
+
+const readFileAsBase64 = () => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+        const base64String = reader.result;
+        base64File.value = base64String.split(',')[1];
+    };
+
+    reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+    };
+
+    reader.readAsDataURL(file.value);
 }
 </script>
 
