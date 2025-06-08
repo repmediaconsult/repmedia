@@ -40,6 +40,7 @@ const formIsInvalid = ref(false);
 const isLoading = ref(false);
 const paymentCancelled = ref(false);
 const flwObj = ref({});
+const paymentMeta = ref({});
 
 const selectedPricing = computed(() => {
     if (form.years_of_experience && form.services.length) {
@@ -77,29 +78,8 @@ const handlePaymentSuccess = async (response: any) => {
             body: { id: response.transaction_id, amount: form.currency == "USD" ? selectedPricing.value : convertedAmount.value, currency: form.currency },
         });
         if (success && data.data.status === "successful") {
-            paymentDetails.value = "Payment details<br><ul>";
-            Object.entries(form).forEach(([key, value]) => {
-                paymentDetails.value += `<li>${key.toUpperCase()}: ${Array.isArray(value) ? value.join(', ') : value}</li>`;
-            });
-            paymentDetails.value += `<li>PAYMENT REF: ${data.data.tx_ref}</li><li>PAYMENT CHANNEL: ${data.data.payment_type}</li><li>PAYMENT AMOUNT: ${data.data.amount}</li></ul>`;
-
-            const { res } = await $fetch<any>("/api/services/email/sg", {
-                method: "POST",
-                body: {
-                    content: paymentDetails.value,
-                    ...(file.value ? {
-                        file: {
-                            file_name: file.value.name, 
-                            base64_file: base64File.value, 
-                            type: file.value.type
-                        }
-                        }: {}),
-                    email: {
-                        subject: "Payment received for consultation"
-                    }
-                },
-            });
-            console.log(res);
+            sendPaymentNotification(data);
+            sendCustomerEmail();
             isLoading.value = false;
 
             flwObj.value.close();
@@ -172,6 +152,7 @@ const beginConsultation = async () => {
             currency: form.currency,
             payment_options: "card, banktransfer, ussd",
             amount,
+            meta: paymentMeta.value,
             callback: handlePaymentSuccess,
             onclose: handlePaymentCancelled,
         });
@@ -213,6 +194,67 @@ const readFileAsBase64 = () => {
 
     reader.readAsDataURL(file.value);
 }
+
+const sendPaymentNotification = async (data: object) => {
+    paymentDetails.value = "Payment details<br><ul>";
+    Object.entries(form).forEach(([key, value]) => {
+        paymentDetails.value += `<li>${key.toUpperCase()}: ${Array.isArray(value) ? value.join(', ') : value}</li>`;
+    });
+    paymentDetails.value += `<li>PAYMENT REF: ${data.data.tx_ref}</li><li>PAYMENT CHANNEL: ${data.data.payment_type}</li><li>PAYMENT AMOUNT: ${data.data.amount}</li></ul>`;
+
+    const { res } = await $fetch<any>("/api/services/email/sg", {
+        method: "POST",
+        body: {
+            content: paymentDetails.value,
+            ...(file.value ? {
+                file: {
+                    file_name: file.value.name, 
+                    base64_file: base64File.value, 
+                    type: file.value.type
+                }
+                }: {}),
+            email: {
+                subject: "Payment received for consultation"
+            }
+        },
+    });
+    console.log(res);
+}
+
+const sendCustomerEmail = async () => {
+    const services = form.services.join(' | ');
+    const content = `Dear Customer,<br><br>
+        We're pleased to confirm that your payment has been received, and your ${services} is now in
+        progress. The RepMedia team is ready to get started and tailor the results to reflect the best of
+        your brand.<br><br>
+        Thank you for choosing us to support your professional journey. Once your ${services} is
+        complete, we will send it straight to your inbox.<br><br>
+        In the meantime, feel free to connect with us on Instagram, LinkedIn or Facebook. If you would
+        like to share your experience, we would be grateful for a review. Be sure to tag us as we always
+        enjoy hearing from clients like you.<br><br>
+        Warm regards<br>
+        Bamiyo<br>
+        <i>RepMedia</i>`;
+
+    const { res } = await $fetch<any>("/api/services/email/sg", {
+        method: "POST",
+        body: {
+            content,
+            email: {
+                from: "bamiyo@repmediaconsult.com",
+                to: form.email,
+                subject: `Your ${services} Payment Has Been Received`
+            }
+        },
+    });
+    console.log(res);
+}
+
+watch(() => form, (newForm) => {
+    paymentMeta.value = {...form};
+    paymentMeta.value.services = paymentMeta.value.services.join(', ');
+}, { deep: true }
+);
 </script>
 
 <template>
