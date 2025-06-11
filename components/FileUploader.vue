@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { toast } from "vue-sonner";
+
 const active = ref(false);
 const file = defineModel<File>("file");
 
@@ -12,6 +14,7 @@ const handleFileUpload = (event: Event, type: "upload" | "drag") => {
     if (type === "drag") toggleActive();
     const uploadedFileExtension = uploadedFile.name.split(".").pop();
     if (["pdf", "doc", "docx"].includes(uploadedFileExtension!)) {
+        if(uploadedFile.size > 5242880) return toast.error("File size must not be more than 5MB");
         file.value = uploadedFile;
     }
 };
@@ -35,7 +38,7 @@ const handleFileUpload = (event: Event, type: "upload" | "drag") => {
                 </span>
                 <div class="flex flex-col items-center justify-center gap-[15px] text-base md:text-xl text-center">
                     <span class="text-[#292D32]">Choose a file or drag & drop it here</span>
-                    <span class="text-[#A9ACB4]">.DOC, .DOCX and .PDF formats, up to 50MB</span>
+                    <span class="text-[#A9ACB4]">.DOC, .DOCX and .PDF formats, up to 5MB</span>
                 </div>
             </div>
             <label for="dropzoneFile" class="btn btn-outline border py-[10px] px-6 text-[#0F0F0F] cursor-pointer">Browse</label>
