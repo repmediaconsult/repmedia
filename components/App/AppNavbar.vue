@@ -1,6 +1,9 @@
 <script setup lang="ts">
+
 const navIsOpen = ref(false);
 const showServices = ref(false);
+const route = useRoute();
+const hamburger = ref(null);
 
 const isHomePage = computed(() => useRoute().name === "index");
 
@@ -18,6 +21,15 @@ onUnmounted(() => {
     window.removeEventListener("resize", watchWindowResize);
     window.removeEventListener("scroll", closeServices);
 });
+
+watch(
+    () => route,
+    (to, from) => {
+        navIsOpen.value && hamburger.value.click();
+    },
+    { deep: true }
+);
+
 </script>
 
 <template>
@@ -27,14 +39,14 @@ onUnmounted(() => {
                 <NuxtLink to="/">
                     <AppIcon name="header-logo" />
                 </NuxtLink>
-                <button v-if="!isHomePage" class="flex lg:hidden flex-col gap-1 shrink-0" @click="navIsOpen = !navIsOpen">
-                    <span v-for="number in 3" :key="number" class="block h-0.5 w-6 rounded-[100px] bg-black"></span>
-                </button>
-                <NavigationLinks v-if="!isHomePage" class="hidden lg:flex" v-model="showServices" />
+                <NavigationLinks class="hidden lg:flex" v-model="showServices" />
                 <transition name="appear" appear>
-                    <NavigationLinks v-if="navIsOpen && !isHomePage" class="flex lg:hidden" v-model="showServices" />
+                    <NavigationLinks v-if="navIsOpen" class="flex lg:hidden" v-model="showServices" />
                 </transition>
                 <AppConsultationLink :class="{ 'hidden lg:flex': $route.name !== 'index' }" />
+                <button ref="hamburger" class="flex lg:hidden flex-col gap-1 shrink-0" @click="navIsOpen = !navIsOpen">
+                    <span v-for="number in 3" :key="number" class="block h-0.5 w-6 rounded-[100px] bg-black"></span>
+                </button>
             </div>
         </nav>
 

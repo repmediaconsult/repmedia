@@ -21,7 +21,7 @@ watch(modelValue, (newValue) => {
 
 <template>
     <div class="flex flex-col gap-3 relative">
-        <label :for="id" class="text-base"> {{ label }}<span v-if="required" class="text-[#FF1616]">*</span> </label>
+        <label :for="id" class="paragraph"> {{ label }}<span v-if="required" class="text-[#FF1616]">*</span> </label>
         <select
             v-model="modelValue"
             :name

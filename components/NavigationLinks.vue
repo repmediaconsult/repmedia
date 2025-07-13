@@ -2,12 +2,12 @@
 const route = useRoute();
 
 const navLinks = [
-    { path: "/", name: "Home" },
-    { path: "", name: "Services", hidden: route.name !== "corporatebranding" },
-    { path: "/personalbranding#pricing", name: "Pricing", hidden: route.name === "corporatebranding" },
+    { path: "/", name: "Home", hidden: route.name === "index" },
+    { path: "", name: "Services", hidden: false },
+    { path: "/personalbranding#pricing", name: "Pricing", hidden: false },
     { path: "https://calendly.com/repmediaconsult-info", name: "Consultation", hidden: route.name === "corporatebranding" },
-    { path: "#contact", name: "Contact Us" },
-    { path: "/#about", name: "About Us" },
+    { path: "/#contact", name: "Contact Us" },
+    { path: "/#about", name: "About Us", hidden: route.name === "index" },
 ];
 
 const showServices = defineModel<boolean>({ default: false });

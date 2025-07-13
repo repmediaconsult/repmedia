@@ -25,21 +25,21 @@ const pricing: Pricing[] = [
         icon: "heart",
         name: "starter",
         description: "A CV rewrite is the first and important step ",
-        pricing: { "0_5": 50, "6_10": 70, "11_15": 120, "15+": 170 },
+        pricing: { "0_5": 37.50, "6_10": 52.50, "11_15": 90.00, "15+": 127.50 },
         checklist: generateChecklist(true, false, false),
     },
     {
         icon: "zap",
         name: "popular",
         description: "You can choose CV rewrite and any other option",
-        pricing: { "0_5": 70, "6_10": 100, "11_15": 150, "15+": 200 },
+        pricing: { "0_5": 52.50, "6_10": 75.00, "11_15": 112.50, "15+": 150.00 },
         checklist: generateChecklist(true, true, false),
     },
     {
         icon: "crown",
         name: "premium",
         description: "The comprehensive package you need to enhance every aspect of your professional profile.",
-        pricing: { "0_5": 100, "6_10": 150, "11_15": 200, "15+": 250 },
+        pricing: { "0_5": 75.00, "6_10": 112.50, "11_15": 150.00, "15+": 187.50 },
         checklist: generateChecklist(true, true, true),
     },
 ];
@@ -56,7 +56,7 @@ pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name})
                 <h5 class="section-header">Get value for your money with any plan you choose </h5>
                 <p class="paragraph max-w-[803px] mx-auto">
                     Select a suitable plan below. Our standard time of completion is 3 days. If you have a custom request or need any of our services under 24
-                    hours, click <button class="text-[#3782CA]">here</button>
+                    hours, click <a target="_blank" href="https://calendly.com/repmediaconsult-info"><button class="text-[#3782CA]">here</button></a>
                 </p>
             </div>
             <div class="space-y-5">
@@ -80,7 +80,7 @@ pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name})
                     label="" />
                 </div>
                 <div class="flex justify-center">
-                    <img class="div-25 pulse-glow" src="/images/25-percent.png" style="border-radius: 15px;" alt="25%" />
+                    <img class="div-25 pulse-glow" src="/images/10-percent.png" style="border-radius: 15px;" alt="25%" />
                 </div>
                 <div class="w-full pricing grid gap-[13px] max-w-[1031px] mx-auto">
                     <div
@@ -111,7 +111,7 @@ pricingOptions.map(o => pricingOptionsSelect.push({value: o.key, label: o.name})
                                 ${{ price.pricing[selectedOption] }}
                             </h6>
                             <h6 class="text-[32px] leading-[42px] -tracking-[1px] mx-2" :class="price.name === 'popular' ? 'text-white' : 'text-[#1D1E25]'">
-                                ${{ price.pricing[selectedOption] - (price.pricing[selectedOption] * 0.25) }}
+                                ${{ (price.pricing[selectedOption] - (price.pricing[selectedOption] * 0.1)).toFixed(2) }}
                             </h6>
                         </div>
                         <div class="space-y-4">

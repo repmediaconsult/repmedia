@@ -17,7 +17,7 @@ const modelValue = defineModel<string>({ default: "" });
 <template>
     <div class="flex flex-col gap-3 font-plus-jakarta">
         <div class="flex items-center justify-between">
-            <label :for="id" class="font-semibold text-base" :class="[labelClass, { '!text-[#eb5757]': !!error }]">
+            <label :for="id" class="paragraph" :class="[labelClass, { '!text-[#eb5757]': !!error }]">
                 {{ label }}<span v-if="required" class="text-[#FF1616]">*</span>
             </label>
             <span v-if="!!error" class="text-xs md:text-sm text-[#eb5757] font-medium">{{ error }}</span>

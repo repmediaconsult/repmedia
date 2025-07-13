@@ -48,7 +48,7 @@ const selectedPricing = computed(() => {
             (pricing) => pricing.year_of_experience === form.years_of_experience && form.services.every((service) => pricing.combinations.includes(service))
         );
         const amount = (selected?.amount ?? 1) * (form.faster_turnaround.toLowerCase() === "yes" ? 1.5 : 1);
-        return amount - (amount * 0.25);
+        return amount - (amount * 0.1);
     }
     return 0;
 });
@@ -241,7 +241,6 @@ const sendCustomerEmail = async () => {
         body: {
             content,
             email: {
-                from: "bamiyo@repmediaconsult.com",
                 to: form.email,
                 subject: `Your ${services} Payment Has Been Received`
             }
@@ -259,7 +258,7 @@ watch(() => form, (newForm) => {
 
 <template>
     <section id="consultation" class="pb-10">
-        <div class="app-container flex flex-col gap-[80px]">
+        <div class="app-container flex flex-col gap-[40px]">
             <div class="flex flex-col items-center justify-center text-center max-w-[948px] mx-auto space-y-5">
                 <h1 class="section-header">We’d like to know more about you</h1>
                 <p class="paragraph">
@@ -268,17 +267,26 @@ watch(() => form, (newForm) => {
                 </p>
             </div>
             <div class="flex flex-col gap-10 w-full max-w-[948px] mx-auto">
+                <div class="flex flex-col gap-[6px]">
+                    <p class="paragraph">Select the services you're interested in.</p>
+                    <ul class="flex flex-col gap-5">
+                        <AppCheckbox v-model="form.services" id="resume" label="CV Review" name="service" value="CV Review" />
+                        <AppCheckbox v-model="form.services" id="linkedin" label="LinkedIn Optimisation" name="service" value="LinkedIn Optimisation" />
+                        <AppCheckbox v-model="form.services" id="cover-letter" label="Cover Letter" name="service" value="Cover Letter" />
+                        <AppCheckbox v-model="form.services" id="biography-portfolio" label="Biography/Portfolio" name="service" value="Biography/Portfolio" />
+                    </ul>
+                </div>
                 <AppTextarea
                     v-model="form.goals"
                     label="What do you do effortlessly?"
-                    placeholder="This as to pertain to your career / business goals"
+                    placeholder="This is as it pertains to your career/business goals"
                     label-class="!font-normal"
                     input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[141px]"
                     class="font-circular" />
                 <AppSelect
                     v-model="form.years_of_experience"
                     :options="experiences"
-                    label="How many years of work experience do you have ?"
+                    label="How many years of work experience do you have?"
                     placeholder="Select" />
                 <AppInput
                     v-model="form.role"
@@ -304,16 +312,7 @@ watch(() => form, (newForm) => {
                     input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
                     class="font-circular" />
                 <div class="flex flex-col gap-[6px]">
-                    <p class="text-[#505050] tetx-lg -tracking-[4%]">Select the services you're interested in.</p>
-                    <ul class="flex flex-col gap-5">
-                        <AppCheckbox v-model="form.services" id="resume" label="CV Review" name="service" value="CV Review" />
-                        <AppCheckbox v-model="form.services" id="linkedin" label="LinkedIn Optimisation" name="service" value="LinkedIn Optimisation" />
-                        <AppCheckbox v-model="form.services" id="cover-letter" label="Cover Letter" name="service" value="Cover Letter" />
-                        <AppCheckbox v-model="form.services" id="biography-portfolio" label="Biography/Portfolio" name="service" value="Biography/Portfolio" />
-                    </ul>
-                </div>
-                <div class="flex flex-col gap-[6px]">
-                    <p class="text-[#505050] tetx-lg -tracking-[4%]">
+                    <p class="paragraph">
                         Our standard turnaround time is 3-4 working days. Would you like a 24 hours service? This option incurs a 50% surcharge.
                     </p>
                     <div class="flex items-center gap-5">

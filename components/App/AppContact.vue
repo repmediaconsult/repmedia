@@ -8,9 +8,9 @@ const supabase = useSupabaseClient();
 const contactOptions = [
     {
         icon: "call",
-        label: "Whatsapp",
-        value: "2348067053996",
-        text: "234 (0) 806 705 3996",
+        label: "WhatsApp",
+        value: "447448956781",
+        text: "+44 74489 56781, +234 806 705 3996",
         type: "tel",
     },
     {
@@ -20,13 +20,13 @@ const contactOptions = [
         text: "hello@repmediaconsult.com",
         type: "email",
     },
-    {
-        icon: "location",
-        label: "Business Address",
-        value: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
-        text: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
-        type: "location",
-    },
+    // {
+    //     icon: "location",
+    //     label: "Business Address",
+    //     value: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
+    //     text: "Green End Road, Cambridge, United Kingdom. CB4 1RU",
+    //     type: "location",
+    // },
 ];
 
 const isLoading = ref(false);
@@ -46,14 +46,31 @@ const sendMessage = async () => {
         return;
     }
     isLoading.value = true;
-    const { error } = await supabase.from("contacts").insert({ ...form });
-    if (error) {
+
+    var content = "";
+    Object.entries(form).forEach(([key, value]) => {
+        content += `${key.toUpperCase()}: ${value}<br>`;
+    });
+
+    const { success } = await $fetch<any>("/api/services/email/sg", {
+        method: "POST",
+        body: {
+            content,
+            email: {
+                subject: `New Website Message`
+            }
+        },
+    });
+
+    if (!success) {
         toast.error("We could not submit your message. Please try again.");
     } else {
         toast.success("Message sent successfully. Our team will reach out to you soon.");
         Object.assign(form, { name: "", email: "", description: "" });
         v$.value.$reset();
     }
+
+    supabase.from("messages").insert({ ...form });
     isLoading.value = false;
 };
 </script>
@@ -67,6 +84,7 @@ const sendMessage = async () => {
                     <h6 class="section-header">
                         {{ $route.name === "corporatebranding" ? "We make your business our business" : "Ready to take the next step in your career" }}
                     </h6>
+                    <p class="paragraph">Don't hesitate to reach out!<br>Weekdays from 9 am to 6 pm GMT</p>
                     <ul class="flex flex-col gap-6">
                         <ContactCard v-for="contact in contactOptions" :key="contact.icon" :contact />
                     </ul>
@@ -77,7 +95,7 @@ const sendMessage = async () => {
                         v-model="form.name"
                         name="name"
                         label="Name"
-                        placeholder="Your Name"
+                        placeholder="Enter your name"
                         input-class="border border-transparent"
                         :error="v$.name.$errors[0]?.$message"
                         required />
@@ -86,11 +104,11 @@ const sendMessage = async () => {
                         v-model="form.email"
                         name="email"
                         label="Email"
-                        placeholder="Email Address"
+                        placeholder="Enter your email address"
                         input-class="border border-transparent"
                         :error="v$.email.$errors[0]?.$message"
                         required />
-                    <AppTextarea id="description" v-model="form.description" name="description" label="Description" placeholder="Example..." />
+                    <AppTextarea id="description" v-model="form.description" name="description" label="Message" placeholder="Enter your message..." />
                     <button
                         class="rounded-[24px] bg-[#000000] text-white py-[10px] px-6 w-fit text-xl tracking-[-4%] flex items-center gap-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
                         :disabled="isLoading"

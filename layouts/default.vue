@@ -8,7 +8,7 @@ const isIndexPage = computed(() => useRoute().name === "index");
         <main>
             <slot />
         </main>
-        <AppContact v-if="!isIndexPage"  />
+        <AppContact  />
         <AppFooter />
     </div>
 </template>

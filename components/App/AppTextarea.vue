@@ -15,7 +15,7 @@ const modelValue = defineModel<string>({ default: "" });
 
 <template>
     <div class="flex flex-col gap-3 font-plus-jakarta">
-        <label :for="id" class="font-semibold text-base" :class="labelClass"> {{ label }}<span v-if="required" class="text-[#FF1616]">*</span> </label>
+        <label :for="id" class="paragraph" :class="labelClass"> {{ label }}<span v-if="required" class="text-[#FF1616]">*</span> </label>
         <textarea
             v-model="modelValue"
             :name
