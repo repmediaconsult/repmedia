@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import { experiences, currencies } from "@/utils/constants";
+import { experiences, currencies, tone, tone_2, portfolio_type } from "@/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "vue-sonner";
 import pricing from "@/data/pricing.json";
@@ -13,14 +13,42 @@ const { flutterwaveScriptMounted, payWithFlutterwave } = useFlutterwave();
 const supabase = useSupabaseClient();
 // const config = useRuntimeConfig();
 
-const rules = {
-    goals: { required },
-    years_of_experience: { required },
-    role: { required },
-    milestones: { required },
+const isChecked1 = ref(false);
+const isChecked2 = ref(false);
+const isChecked3 = ref(false);
+const isChecked4 = ref(false);
+
+const rules = computed(() => ({
+    goals: isChecked1.value ? { required } : {},
+    years_of_experience: isChecked1.value ? { required } : {},
+    role: isChecked1.value ? { required } : {},
+    milestones: isChecked1.value ? { required } : {},
     email: { required, email },
     currency: { required },
-};
+    name: { required },
+    strengths: isChecked1.value ? { required } : {},
+    cv_keywords: isChecked1.value ? { required } : {},
+    job_description: isChecked2.value ? { required } : {},
+    motivation: isChecked2.value ? { required } : {},
+    top_skills: isChecked2.value ? { required } : {},
+    direct_experience: isChecked2.value ? { required } : {},
+    tone: isChecked2.value ? { required } : {},
+    linkedin: isChecked3.value ? { required } : {},
+    current_job: isChecked3.value ? { required } : {},
+    opportunities_types: isChecked3.value ? { required } : {},
+    skills: isChecked3.value ? { required } : {},
+    profile_tone: isChecked3.value ? { required } : {},
+    achievements: isChecked3.value ? { required } : {},
+    sections_optimization: isChecked3.value ? { required } : {},
+    portfolio_link: isChecked4.value ? { required } : {},
+    portfolio_type: isChecked4.value ? { required } : {},
+    target_audience: isChecked4.value ? { required } : {},
+    proud_projects: isChecked4.value ? { required } : {},
+    design_recommendations: isChecked4.value ? { required } : {},
+    preferred_platform: isChecked4.value ? { required } : {},
+    faster_turnaround: isChecked1.value || isChecked2.value || isChecked3.value ? { required } : {},
+}));
+
 const form = reactive({
     goals: "",
     years_of_experience: "",
@@ -30,6 +58,30 @@ const form = reactive({
     services: [],
     faster_turnaround: "",
     currency: "",
+    name: "",
+    whatsapp: "",
+    strengths: "",
+    cv_keywords: "",
+    job_description: "",
+    motivation: "",
+    top_skills: "",
+    direct_experience: "",
+    tone: "",
+    challenge: "",
+    linkedin: "",
+    current_job: "",
+    opportunities_types: "",
+    skills: "",
+    profile_tone: "",
+    achievements: "",
+    sections_optimization: "",
+    portfolio_link: "",
+    portfolio_type: "",
+    target_audience: "",
+    proud_projects: "",
+    testimonials_or_metrics: "",
+    design_recommendations: "",
+    preferred_platform: ""
 });
 const file = ref<File>();
 const base64File = ref("");
@@ -58,6 +110,8 @@ const config = useRuntimeConfig();
 const convertedAmount = ref(0);
 const convertedData = ref("");
 const lastConversion = ref("");
+
+const sentForm = ref<string[]>([]);
 
 if (process.client) {
   convertedData.value = localStorage.getItem("currencyConversions");
@@ -196,9 +250,10 @@ const readFileAsBase64 = () => {
 }
 
 const sendPaymentNotification = async (data: object) => {
+    prepareForm();
     paymentDetails.value = "Payment details<br><ul>";
-    Object.entries(form).forEach(([key, value]) => {
-        paymentDetails.value += `<li>${key.toUpperCase()}: ${Array.isArray(value) ? value.join(', ') : value}</li>`;
+    sentForm.value.map(val => {
+        paymentDetails.value += `<li>${val.toUpperCase()}: ${Array.isArray(form[val]) ? form[val].join(', ') : form[val]}</li>`;
     });
     paymentDetails.value += `<li>PAYMENT REF: ${data.data.tx_ref}</li><li>PAYMENT CHANNEL: ${data.data.payment_type}</li><li>PAYMENT AMOUNT: ${data.data.amount}</li></ul>`;
 
@@ -249,6 +304,26 @@ const sendCustomerEmail = async () => {
     console.log(res);
 }
 
+const updateForm = (data: Array<any>) => {
+    if(data[0] == 1) isChecked1.value = data[1];
+    if(data[0] == 2) isChecked2.value = data[1];
+    if(data[0] == 3) isChecked3.value = data[1];
+    if(data[0] == 4) isChecked4.value = data[1];
+}
+
+const prepareForm = () => {
+    const req = ['services', 'name', 'email', 'currency'];
+    const service_vals = {
+        "CV Review": ['whatsapp', 'years_of_experience', 'role', 'strengths', 'goals', 'milestones', 'cv_keywords', 'job_description', 'faster_turnaround'],
+        "Cover Letter": ['job_description', 'motivation', 'top_skills', 'direct_experience', 'tone', 'challenge', 'faster_turnaround'],
+        "LinkedIn Optimisation": ['linkedin', 'current_job', 'opportunities_types', 'skills', 'profile_tone', 'achievements', 'sections_optimization', 'faster_turnaround'],
+        "Biography/Portfolio": ['portfolio_link', 'portfolio_type', 'target_audience', 'proud_projects', 'testimonials_or_metrics', 'design_recommendations', 'preferred_platform'],
+    }
+
+    const merged_array = Object.entries(service_vals).filter(([key]) => form.services.includes(key)).flatMap(([_, value]) => value);
+    sentForm.value = [...req, ...merged_array];
+}
+
 watch(() => form, (newForm) => {
     paymentMeta.value = {...form};
     paymentMeta.value.services = paymentMeta.value.services.join(', ');
@@ -270,53 +345,291 @@ watch(() => form, (newForm) => {
                 <div class="flex flex-col gap-[6px]">
                     <p class="paragraph">Select the services you're interested in.</p>
                     <ul class="flex flex-col gap-5">
-                        <AppCheckbox v-model="form.services" id="resume" label="CV Review" name="service" value="CV Review" />
-                        <AppCheckbox v-model="form.services" id="linkedin" label="LinkedIn Optimisation" name="service" value="LinkedIn Optimisation" />
-                        <AppCheckbox v-model="form.services" id="cover-letter" label="Cover Letter" name="service" value="Cover Letter" />
-                        <AppCheckbox v-model="form.services" id="biography-portfolio" label="Biography/Portfolio" name="service" value="Biography/Portfolio" />
+                        <AppCheckbox :position="1" @update:checked="updateForm" v-model="form.services" id="resume" label="CV Review" name="service" value="CV Review" />
+                        <AppCheckbox :position="2" @update:checked="updateForm" v-model="form.services" id="cover-letter" label="Cover Letter" name="service" value="Cover Letter" />
+                        <AppCheckbox :position="3" @update:checked="updateForm" v-model="form.services" id="linkedin" label="LinkedIn Optimisation" name="service" value="LinkedIn Optimisation" />
+                        <AppCheckbox :position="4" @update:checked="updateForm" v-model="form.services" id="biography-portfolio" label="Biography/Portfolio" name="service" value="Biography/Portfolio" />
                     </ul>
                 </div>
-                <AppTextarea
-                    v-model="form.goals"
-                    label="What do you do effortlessly?"
-                    placeholder="This is as it pertains to your career/business goals"
-                    label-class="!font-normal"
-                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[141px]"
-                    class="font-circular" />
-                <AppSelect
-                    v-model="form.years_of_experience"
-                    :options="experiences"
-                    label="How many years of work experience do you have?"
-                    placeholder="Select" />
                 <AppInput
-                    v-model="form.role"
-                    label="What role(s) or job title(s) would you like to apply for?"
-                    placeholder="Enter"
-                    class="font-circular"
-                    label-class="!font-normal"
-                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
-                <FileUploader v-model:file="file" />
-                <AppTextarea
-                    v-model="form.milestones"
-                    label="Did you achieve any notable milestones during your time at the previously mentioned positions in your CV? If so, please specify (e.g., promotions, sales growth, acquiring new company accounts, receiving awards for projects)."
+                    v-model="form.name"
+                    name="name"
+                    label="Full Name"
                     placeholder=""
-                    class="font-circular"
                     label-class="!font-normal"
-                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    class="font-circular" />
                 <AppInput
                     v-model="form.email"
                     name="email"
                     label="Email Address"
-                    placeholder="Email address"
+                    placeholder=""
                     label-class="!font-normal"
                     input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
                     class="font-circular" />
-                <div class="flex flex-col gap-[6px]">
+
+                    <!-- CV Review -->
+                <AppInput
+                    v-if="isChecked1"
+                    v-model="form.whatsapp"
+                    name="whatsapp"
+                    label="WhatsApp Number (optional)"
+                    placeholder="+44 XXXXX XXXXX"
+                    label-class="!font-normal"
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    class="font-circular" />
+                    <!-- CV Review -->
+                    <!-- Cover letter -->
+                <AppInput
+                    v-if="isChecked2"
+                    v-model="form.job_description"
+                    label="Would you like your CV tailored for a specific job posting? If so, paste the job description or link here"
+                    placeholder=""
+                    label-class="!font-normal"
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    class="font-circular" />
+                    <!-- Cover letter -->
+                    <!-- Linkedin profile -->
+                <AppInput
+                    v-if="isChecked3"
+                    v-model="form.linkedin"
+                    label="Link to your current LinkedIn profile (if available)"
+                    placeholder=""
+                    label-class="!font-normal"
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    class="font-circular" />
+                    <!-- Linkedin profile -->
+                    <!-- Portfolio review -->
+                <AppInput
+                    v-if="isChecked4"
+                    v-model="form.portfolio_link"
+                    label="Link to your current portfolio (if available)"
+                    placeholder=""
+                    label-class="!font-normal"
+                    input-class="bg-white py-[10px] h-[56px] px-[14px] border border-[#D9DDE3] font-circular !font-normal !text-lg placeholder:text-lg !placeholder:font-normal"
+                    class="font-circular" />
+                    <!-- Portfolio review -->
+
+                <FileUploader v-model:file="file" />
+
+                <!-- CV Review -->
+                <AppSelect
+                    v-if="isChecked1"
+                    v-model="form.years_of_experience"
+                    :options="experiences"
+                    label="How many years of total work experience do you have?"
+                    placeholder="Select" />
+                <AppInput
+                    v-if="isChecked1"
+                    v-model="form.role"
+                    label="What type of role and industry are you targeting with your new CV?"
+                    placeholder="e.g., Product Manager - Fintech, Banking"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                <AppInput
+                    v-if="isChecked1"
+                    v-model="form.strengths"
+                    label="What are your top 3 professional strengths or areas of expertise?"
+                    placeholder="e.g., Project management, product marketing, data visualisation"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                <AppTextarea
+                    v-if="isChecked1"
+                    v-model="form.goals"
+                    label="What do you do effortlessly as it relates to work?"
+                    placeholder="e.g., I know how to turn business ideas into appealing user-centric products"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[141px]"
+                    class="font-circular" />
+                <AppTextarea
+                    v-if="isChecked1"
+                    v-model="form.milestones"
+                    label="Please outline notable accomplishments in your work history?"
+                    placeholder="e.g., Sr. Product Manager - Jan. 2025 till date. I led the launch of Apple Pay in 5 new markets, securing payments for over 40 million users."
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+                <AppInput
+                    v-if="isChecked1"
+                    v-model="form.cv_keywords"
+                    label="Do you have any specific keywords, phrases, or skills you'd like emphasized in your CV?"
+                    placeholder="e.g., Agile Methodologies, API Design & Experimentation, SQL, Tableau"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                <AppInput
+                    v-if="isChecked1"
+                    v-model="form.job_description"
+                    label="Would you like your CV tailored for a specific job posting? If so, upload or paste the job description or link (Optional)"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                    <!-- CV Review -->
+
+                    <!-- Cover letter -->
+                <AppTextarea
+                    v-if="isChecked2"
+                    v-model="form.motivation"
+                    label="What motivates you about this particular role or company?"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+
+                <AppInput
+                    v-if="isChecked2"
+                    v-model="form.top_skills"
+                    label="What are the top 2-3 skills or experiences you want highlighted in your cover letter? "
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+
+                <AppInput
+                    v-if="isChecked2"
+                    v-model="form.direct_experience"
+                    label="Have you had any direct experience or success that aligns with the responsibilities of the role?"
+                    placeholder="e.g., led a similar project, worked in same industry"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+
+                <AppSelect
+                    v-if="isChecked2"
+                    v-model="form.tone"
+                    :options="tone"
+                    label="What tone would you like your cover letter to reflect?"
+                    placeholder="Select tone" />
+
+                <AppTextarea
+                    v-if="isChecked2"
+                    v-model="form.challenge"
+                    label="Is there any specific challenge or gap (e.g., career break, job switch) you'd like us to address in the letter? (Optional)"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+                    <!-- Cover letter -->
+
+                    <!-- Linkedin profile -->
+                <AppInput
+                    v-if="isChecked3"
+                    v-model="form.current_job"
+                    label="What is your current job title and industry?"
+                    placeholder="e.g., Project Manager - FinTech"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+
+                <AppInput
+                    v-if="isChecked3"
+                    v-model="form.opportunities_types"
+                    label="What type of opportunities are you hoping to attract via LinkedIn?"
+                    placeholder="e.g., recruiters, clients, speaking engagements, new job roles"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+
+                <AppTextarea
+                    v-if="isChecked3"
+                    v-model="form.skills"
+                    label="What are your key skills or unique selling points you'd like to emphasize?"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+
+                <AppSelect
+                    v-if="isChecked3"
+                    v-model="form.profile_tone"
+                    :options="tone_2"
+                    label="What tone would you like your profile to have?"
+                    placeholder="Select tone" />
+
+                <AppTextarea
+                    v-if="isChecked3"
+                    v-model="form.achievements"
+                    label="Are there achievements, projects, or stories you'd like woven into your profile summary? (Optional)"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+
+                <div v-if="isChecked3" class="flex flex-col gap-[6px]">
                     <p class="paragraph">
-                        Our standard turnaround time is 3-4 working days. Would you like a 24 hours service? This option incurs a 50% surcharge.
+                        Would you like us to optimize your headline, about section, and experience section?
                     </p>
                     <div class="flex items-center gap-5">
-                        <AppRadio v-model="form.faster_turnaround" id="yes" value="yes" name="tunraround" label="Yes" />
+                        <AppRadio v-model="form.sections_optimization" id="yes" value="yes" name="optimization" label="Yes" />
+                        <AppRadio v-model="form.sections_optimization" id="no" value="no" name="optimization" label="No" />
+                    </div>
+                </div>
+                    <!-- Linkedin profile -->
+
+                    <!-- Portfolio review -->
+                <AppSelect
+                    v-if="isChecked4"
+                    v-model="form.portfolio_type"
+                    :options="portfolio_type"
+                    label="What type of portfolio are you aiming for?"
+                    placeholder="Select tone" />
+
+                <AppInput
+                    v-if="isChecked4"
+                    v-model="form.target_audience"
+                    label="Who is your target audience?"
+                    placeholder="e.g., recruiters, clients, investors"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+
+                <AppTextarea
+                    v-if="isChecked4"
+                    v-model="form.proud_projects"
+                    label="What 3 projects or pieces are you most proud of and why?"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+
+                <AppTextarea
+                    v-if="isChecked4"
+                    v-model="form.testimonials_or_metrics"
+                    label="Do you have testimonials or metrics you'd like us to include? (Optional)"
+                    placeholder=""
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] font-circular text-lg !placeholder:text-lg !placeholder:font-normal h-[156px]" />
+
+                <div v-if="isChecked4" class="flex flex-col gap-[6px]">
+                    <p class="paragraph">
+                        Would you like help with layout/design recommendations as well?
+                    </p>
+                    <div class="flex items-center gap-5">
+                        <AppRadio v-model="form.design_recommendations" id="yes" value="yes" name="tunraround" label="Yes" />
+                        <AppRadio v-model="form.design_recommendations" id="no" value="no" name="tunraround" label="No" />
+                    </div>
+                </div>
+
+                <AppInput
+                    v-if="isChecked4"
+                    v-model="form.preferred_platform"
+                    label="Do you have a preferred platform for your portfolio?"
+                    placeholder="e.g. PDF, Behance, personal website"
+                    class="font-circular"
+                    label-class="!font-normal"
+                    input-class="bg-white border border-[#D9DDE3] h-[56px] font-circular text-lg !placeholder:text-lg !placeholder:font-normal" />
+                    <!-- Portfolio review -->
+
+                <div v-if="isChecked1 || isChecked2 || isChecked3" class="flex flex-col gap-[6px]">
+                    <p class="paragraph">
+                        Our standard turnaround time is 3-4 working days. Would you like a 24-hour express service?
+                    </p>
+                    <div class="flex items-center gap-5">
+                        <AppRadio v-model="form.faster_turnaround" id="yes" value="yes" name="tunraround" label="Yes (incurs a 50% surcharge)" />
                         <AppRadio v-model="form.faster_turnaround" id="no" value="no" name="tunraround" label="No" />
                     </div>
                 </div>

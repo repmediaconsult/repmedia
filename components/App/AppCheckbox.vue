@@ -7,16 +7,22 @@ interface CheckboxProps {
     id: string;
     label?: string;
     name: string;
+    position: number;
 }
 
-defineProps<CheckboxProps>();
+const props = defineProps<CheckboxProps>();
+const emit = defineEmits(['update:checked']);
+
+function handleChange(event: Event) {
+  emit('update:checked', [props.position, (event.target as HTMLInputElement).checked]);
+}
 
 const modelValue = defineModel<string | string[] | never[]>({ default: "" });
 </script>
 
 <template>
     <label :for="id" class="cursor-pointer inline-flex items-center">
-        <input :id type="checkbox" v-model="modelValue" v-bind="$attrs" hidden />
+        <input @change="handleChange" :id type="checkbox" v-model="modelValue" v-bind="$attrs" hidden />
         <div class="box bg-white flex content-center items-center"></div>
         <span class="text-lg text-[#313131]"> {{ label }} </span>
     </label>

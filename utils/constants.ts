@@ -20,3 +20,24 @@ export const currencies = [
     { value: "NGN", label: "NGN" },
     { value: "GBP", label: "GBP" },
 ];
+
+export const tone = [
+    { value: "Professional", label: "Professional" },
+    { value: "Friendly and approachable", label: "Friendly and approachable" },
+    { value: "Confident and persuasive", label: "Confident and persuasive" },
+    { value: "Custom", label: "Custom (please describe below)" },
+];
+
+export const tone_2 = [
+    { value: "Professional", label: "Professional" },
+    { value: "Personal and authentic", label: "Personal and authentic" },
+    { value: "Strategic and achievement-focused", label: "Strategic and achievement-focused" },
+    { value: "Other", label: "Other (please specify below)" },
+];
+
+export const portfolio_type = [
+    { value: "Creative", label: "Creative (design, writing, photography)" },
+    { value: "Professional", label: "Professional (consulting, coaching, technical case studies)" },
+    { value: "Developer/Tech", label: "Developer/Tech" },
+    { value: "Other", label: "Other (please specify)" },
+];
