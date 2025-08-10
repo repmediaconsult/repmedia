@@ -15,10 +15,10 @@
                     Establish a strong foundation to support your business expansion efforts and build a unique strategy that tells your story and resonates
                     with your target market.
                 </p>
-                <NuxtLink class="btn btn-outline py-[10px] hover:!bg-[#3782CA] hover:!border-[transparent] px-6" to="#process">
+                <a class="btn btn-outline py-[10px] hover:!bg-[#3782CA] hover:!border-[transparent] px-6" href="https://calendly.com/repmediaconsult-info">
                     Talk to an Expert
                     <AppIcon name="arrow-right-line" />
-                </NuxtLink>
+                </a>
             </div>
             <div>
                 <img src="/images/corporate-branding-hero.webp" alt="corporate branding" />

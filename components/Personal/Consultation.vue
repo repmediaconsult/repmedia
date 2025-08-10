@@ -639,7 +639,7 @@ watch(() => form, (newForm) => {
                     label="What currency would you like to pay in?"
                     placeholder="Select currency" />
                 <p class="text-sm text-[#7E8492]">
-                    We are fully GDPR-compliant and you can rest assured that any information you give us
+                    We are fully GDPR-compliant and you can be rest assured that any information you give us
                     is completely secure. Check out our <NuxtLink to="/privacypolicy" class="text-[#3782CA] underline">privacy policy</NuxtLink> for more information.
                 </p>
             </div>

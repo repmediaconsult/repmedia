@@ -4,6 +4,8 @@ const navIsOpen = ref(false);
 const showServices = ref(false);
 const route = useRoute();
 const hamburger = ref(null);
+const navKey = ref(0);
+const servicesFocused = ref(false);
 
 const isHomePage = computed(() => useRoute().name === "index");
 
@@ -12,6 +14,11 @@ const watchWindowResize = () => {
     navIsOpen.value = innerWidth > 1028;
 };
 const closeServices = () => (showServices.value = false);
+const checkMousePos = () => {
+    setTimeout(() => {
+        if(!servicesFocused.value) showServices.value = false;
+    }, 500);
+};
 
 onMounted(() => {
     window.addEventListener("resize", watchWindowResize);
@@ -25,7 +32,8 @@ onUnmounted(() => {
 watch(
     () => route,
     (to, from) => {
-        navIsOpen.value && hamburger.value.click();
+        navKey.value += 1;
+        showServices.value = false;
     },
     { deep: true }
 );
@@ -39,11 +47,11 @@ watch(
                 <NuxtLink to="/">
                     <AppIcon name="header-logo" />
                 </NuxtLink>
-                <NavigationLinks class="hidden lg:flex" v-model="showServices" />
+                <NavigationLinks @services_blur = "checkMousePos" :key="navKey" class="hidden lg:flex" v-model="showServices" />
                 <transition name="appear" appear>
-                    <NavigationLinks v-if="navIsOpen" class="flex lg:hidden" v-model="showServices" />
+                    <NavigationLinks @services_blur = "checkMousePos" :key="navKey" v-if="navIsOpen" class="flex lg:hidden" v-model="showServices" />
                 </transition>
-                <AppConsultationLink :class="{ 'hidden lg:flex': $route.name !== 'index' }" />
+                <AppConsultationLink id="c-link":class="{ 'hidden lg:flex': $route.name !== 'index' }" />
                 <button ref="hamburger" class="flex lg:hidden flex-col gap-1 shrink-0" @click="navIsOpen = !navIsOpen">
                     <span v-for="number in 3" :key="number" class="block h-0.5 w-6 rounded-[100px] bg-black"></span>
                 </button>
@@ -51,7 +59,7 @@ watch(
         </nav>
 
         <Transition>
-            <AppNavbarServices v-if="showServices" @close="showServices = false" />
+            <AppNavbarServices @mouseover="servicesFocused = true" v-if="showServices" @close="showServices = false" @mouseleave="showServices = false; servicesFocused = false" />
         </Transition>
     </div>
 </template>
@@ -67,5 +75,11 @@ watch(
 .appear-enter-active,
 .appear-leave-active {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media only screen and (max-width: 768px) {
+    #c-link {
+        display: none;
+    }
 }
 </style>
